@@ -1,0 +1,44 @@
+---
+description: ModusPractica Pro is developed entirely in English
+alwaysApply: true
+---
+
+# English-only product language
+
+ModusPractica Pro is an **international app**. All user-facing and project-facing text must be **English (en)**.
+
+## Always write in English
+
+- UI copy: labels, buttons, tooltips, dialogs, toasts, placeholders, empty states
+- HTML: `lang="en"`, `<title>`, meta descriptions, headings, body text
+- JavaScript: user-visible strings, error messages, confirmations
+- Documentation: README, CHANGELOG entries, comments meant for users, release notes
+- GitHub: repository description, README, issue/PR text for this project
+
+## Do not add Dutch or other languages
+
+Unless the user explicitly requests a translation or i18n feature, do not introduce non-English UI or docs.
+
+## Locale conventions
+
+- Use international English (en-GB style is fine; match existing copy in the file you edit)
+- Dates in UI: follow existing app format (often `DD-MM-YYYY` or ISO as already used)
+- Developer chat with the user may be Dutch; **the codebase and app remain English**
+
+## Examples
+
+```html
+<!-- BAD -->
+<button>Opslaan</button>
+
+<!-- GOOD -->
+<button>Save</button>
+```
+
+```javascript
+// BAD
+showToast('Stuk verwijderd');
+
+// GOOD
+showToast('Piece deleted');
+```
