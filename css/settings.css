@@ -1,0 +1,312 @@
+/* ── Pagina layout ── */
+.settings-page {
+  min-height: 100vh;
+  background: var(--bg-body);
+}
+
+.settings-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  margin-right: 8px;
+}
+
+.settings-nav-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+}
+
+.settings-nav-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.settings-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Settings sectie ── */
+.settings-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-section-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ── Groq key sectie ── */
+.api-key-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.api-key-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--surface);
+  color: var(--text-primary);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-text-security: disc;
+}
+
+.api-key-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(30,110,181,0.12);
+}
+
+.api-key-remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.api-key-remember input {
+  accent-color: var(--accent);
+}
+
+.api-key-hint {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.api-key-status {
+  margin-top: 10px;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  display: none;
+}
+
+.api-key-status.success {
+  display: block;
+  background: var(--success-light);
+  color: var(--success);
+  border: 1px solid rgba(16,185,129,0.3);
+}
+
+.api-key-status.error {
+  display: block;
+  background: var(--danger-light);
+  color: var(--danger);
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.api-key-status.info {
+  display: block;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid rgba(30,110,181,0.3);
+}
+
+/* ── Backup knoppen ── */
+.backup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.backup-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.backup-row-info {
+  flex: 1;
+}
+
+.backup-row-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.backup-row-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── Import status ── */
+.import-status {
+  margin-top: 10px;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  display: none;
+  line-height: 1.5;
+}
+
+.import-status.success {
+  display: block;
+  background: var(--success-light);
+  color: var(--success);
+  border: 1px solid rgba(16,185,129,0.3);
+}
+
+.import-status.error {
+  display: block;
+  background: var(--danger-light);
+  color: var(--danger);
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.import-status.info {
+  display: block;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid rgba(30,110,181,0.3);
+}
+
+/* ── Danger zone ── */
+.settings-section.danger {
+  border-color: rgba(239,68,68,0.3);
+  background: rgba(239,68,68,0.02);
+}
+
+.settings-section.danger .settings-section-title {
+  color: var(--danger);
+}
+
+/* ── App info ── */
+.app-info {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.app-info-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+.app-info-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.app-info-version {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 4px;
+}
+
+.app-info-tagline {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.app-info-links {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.app-info-links a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.app-info-links a:hover {
+  text-decoration: underline;
+}
+
+/* ── Data stats ── */
+.data-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.data-stat {
+  text-align: center;
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.data-stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.data-stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}

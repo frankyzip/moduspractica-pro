@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,
+    initial-scale=1.0">
+  <link rel="canonical" href="https://parturamusic.be/ModusPractica_Pro/schedule.html">
+  <title>ModusPractica Pro — Schedule</title>
+  <link rel="icon" type="image/png" href="BreinLogo.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/schedule.css">
+  <!-- Google Consent Mode v2 — standaard alles geweigerd voor EER -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage':         'denied',
+      'ad_user_data':       'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage':  'denied',
+      'region': ['BE','NL','DE','FR','ES','IT',
+                 'PL','SE','DK','FI','NO','AT',
+                 'CH','PT','IE','LU','CZ','SK',
+                 'HU','RO','BG','HR','SI','EE',
+                 'LV','LT','MT','CY','GR'],
+      'wait_for_update': 500
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async
+    src="https://www.googletagmanager.com/gtag/js?id=G-WJ7ZJJF6E5">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJ7ZJJF6E5');
+  </script>
+  <script>
+    (function () {
+      var c = localStorage.getItem('mp_ga_consent');
+      if (c === 'granted') {
+        gtag('consent', 'update', {
+          'analytics_storage':  'granted',
+          'ad_storage':         'denied',
+          'ad_user_data':       'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="schedule-page">
+
+  <!-- Navigatie -->
+  <nav class="schedule-nav">
+    <a href="dashboard.html" class="schedule-nav-brand">
+      <img src="BreinLogo.png" class="schedule-nav-logo"
+           alt="ModusPractica">
+      <span class="schedule-nav-name">ModusPractica</span>
+    </a>
+    <a href="dashboard.html" class="nav-btn">
+      🏠 Dashboard
+    </a>
+    <a href="schedule.html" class="nav-btn active">
+      📅 Schedule
+    </a>
+    <a href="statistics.html" class="nav-btn">
+      📊 Statistics
+    </a>
+    <a href="settings.html" class="nav-btn">
+      ⚙️ Settings
+    </a>
+    <a href="about.html" class="nav-btn">
+      ℹ️ About
+    </a>
+    <a href="manual.html" class="nav-btn">
+      📖 Manual
+    </a>
+    <a href="practice-session.html?free=true" class="nav-btn nav-btn-free">
+      🎹 Free Practice
+    </a>
+  </nav>
+
+  <div class="schedule-content">
+
+    <!-- View tabs -->
+    <div class="schedule-view-tabs">
+      <button class="view-tab active" data-view="list"
+              id="tabList">
+        📋 List
+      </button>
+      <button class="view-tab" data-view="month"
+              id="tabMonth">
+        🗓 Month
+      </button>
+    </div>
+
+    <!-- Header met periode selector -->
+    <div class="schedule-header">
+      <div class="schedule-header-left">
+        <h1 class="schedule-title" id="scheduleTitle">
+          Upcoming Schedule
+        </h1>
+        <p class="schedule-subtitle" id="scheduleSubtitle">
+          Your practice plan for the next
+          <span id="scheduleWeeks">4</span> weeks
+        </p>
+      </div>
+      <div class="schedule-header-right" id="listViewControls">
+        <div class="weeks-selector">
+          <span class="weeks-label">Weeks ahead:</span>
+          <div class="weeks-btns">
+            <button class="weeks-btn" 
+                    data-weeks="1">1</button>
+            <button class="weeks-btn" 
+                    data-weeks="2">2</button>
+            <button class="weeks-btn active" 
+                    data-weeks="4">4</button>
+            <button class="weeks-btn" 
+                    data-weeks="8">8</button>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-header-right hidden"
+           id="monthViewControls">
+        <div class="month-nav">
+          <button class="month-nav-btn" id="btnMonthPrev"
+                  title="Previous month">‹</button>
+          <button class="month-nav-btn month-nav-today"
+                  id="btnMonthToday">Today</button>
+          <button class="month-nav-btn" id="btnMonthNext"
+                  title="Next month">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Samenvatting pills -->
+    <div class="schedule-summary" id="scheduleSummary">
+      <!-- Dynamisch gevuld -->
+    </div>
+
+    <!-- List view -->
+    <div class="schedule-calendar" id="scheduleCalendar">
+      <!-- Dynamisch gevuld -->
+    </div>
+
+    <!-- Month view -->
+    <div class="month-view hidden" id="monthView">
+      <p class="month-view-note">
+        Past: green = all planned sections done;
+        diagonal green/red = partly done;
+        red = nothing practiced while sections were due.
+        Orange text = session count.
+        Future planned days are yellow.
+      </p>
+      <div class="month-weekdays">
+        <span>Mon</span><span>Tue</span><span>Wed</span>
+        <span>Thu</span><span>Fri</span><span>Sat</span>
+        <span>Sun</span>
+      </div>
+      <div class="month-grid" id="monthGrid"></div>
+      <div class="day-detail-panel hidden"
+           id="dayDetailPanel"></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module" src="js/schedule.js"></script>
+<script src="js/fullscreen.js"></script>
+</body>
+</html>

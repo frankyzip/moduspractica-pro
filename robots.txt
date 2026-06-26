@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Publieke pagina's
+Allow: /ModusPractica_Pro/
+Allow: /ModusPractica_Pro/index.html
+Allow: /ModusPractica_Pro/dashboard.html
+Allow: /ModusPractica_Pro/schedule.html
+Allow: /ModusPractica_Pro/statistics.html
+Allow: /ModusPractica_Pro/settings.html
+Allow: /ModusPractica_Pro/about.html
+Allow: /ModusPractica_Pro/manual.html
+Allow: /ModusPractica_Pro/science.html
+Allow: /ModusPractica_Pro/releases.html
+
+# Niet indexeren
+Disallow: /ModusPractica_Pro/log.html
+Disallow: /ModusPractica_Pro/print-report.html
+
+# Sitemap
+Sitemap: https://parturamusic.be/ModusPractica_Pro/sitemap.xml

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,
+    initial-scale=1.0">
+  <link rel="canonical" href="https://parturamusic.be/ModusPractica_Pro/settings.html">
+  <title>ModusPractica Pro — Settings</title>
+  <link rel="icon" type="image/png" href="BreinLogo.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <!-- Google Consent Mode v2 — standaard alles geweigerd voor EER -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage':         'denied',
+      'ad_user_data':       'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage':  'denied',
+      'region': ['BE','NL','DE','FR','ES','IT',
+                 'PL','SE','DK','FI','NO','AT',
+                 'CH','PT','IE','LU','CZ','SK',
+                 'HU','RO','BG','HR','SI','EE',
+                 'LV','LT','MT','CY','GR'],
+      'wait_for_update': 500
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async
+    src="https://www.googletagmanager.com/gtag/js?id=G-WJ7ZJJF6E5">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJ7ZJJF6E5');
+  </script>
+  <script>
+    (function () {
+      var c = localStorage.getItem('mp_ga_consent');
+      if (c === 'granted') {
+        gtag('consent', 'update', {
+          'analytics_storage':  'granted',
+          'ad_storage':         'denied',
+          'ad_user_data':       'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="settings-page">
+
+  <!-- Navigatie -->
+  <nav class="settings-nav">
+    <a href="dashboard.html" class="settings-nav-brand">
+      <img src="BreinLogo.png" class="settings-nav-logo"
+           alt="ModusPractica">
+      <span class="settings-nav-name">ModusPractica</span>
+    </a>
+    <a href="dashboard.html" class="nav-btn">
+      🏠 Dashboard
+    </a>
+    <a href="schedule.html" class="nav-btn">
+      📅 Schedule
+    </a>
+    <a href="statistics.html" class="nav-btn">
+      📊 Statistics
+    </a>
+    <a href="settings.html" class="nav-btn active">
+      ⚙️ Settings
+    </a>
+    <a href="about.html" class="nav-btn">
+      ℹ️ About
+    </a>
+    <a href="manual.html" class="nav-btn">
+      📖 Manual
+    </a>
+    <a href="practice-session.html?free=true" class="nav-btn nav-btn-free">
+      🎹 Free Practice
+    </a>
+  </nav>
+
+  <div class="settings-content">
+
+    <!-- App info -->
+    <div class="settings-section">
+      <div class="app-info">
+        <img src="BreinLogo.png" class="app-info-logo"
+             alt="ModusPractica Pro">
+        <div class="app-info-name">ModusPractica Pro</div>
+        <div class="app-info-version">
+          Version 1.1.9 · Build 20260625
+        </div>
+        <div class="app-info-tagline">
+          Intelligent practice planner · 
+          A Belgian product, developed in Flanders.
+        </div>
+        <div class="app-info-links">
+          <a href="https://www.parturamusic.be"
+             target="_blank" rel="noopener">
+            parturamusic.be
+          </a>
+          <span style="color:var(--text-muted);">·</span>
+          <a href="mailto:info@parturamusic.be">
+            info@parturamusic.be
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Database overzicht -->
+    <div class="settings-section">
+      <div class="settings-section-title">
+        📦 Your Data
+      </div>
+      <div class="settings-section-desc">
+        Overview of your current database.
+      </div>
+      <div class="data-stats">
+        <div class="data-stat">
+          <div class="data-stat-value" 
+               id="statPieces">0</div>
+          <div class="data-stat-label">Pieces</div>
+        </div>
+        <div class="data-stat">
+          <div class="data-stat-value"
+               id="statSections">0</div>
+          <div class="data-stat-label">Sections</div>
+        </div>
+        <div class="data-stat">
+          <div class="data-stat-value"
+               id="statSessions">0</div>
+          <div class="data-stat-label">Sessions</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Groq API -->
+    <div class="settings-section">
+      <div class="settings-section-title">
+        🤖 Groq AI Assistant
+      </div>
+      <div class="settings-section-desc">
+        Enter your personal Groq API key to generate
+        intelligent progress reports in Statistics.
+        By default, your key is kept only for this browser session.
+        You can choose to remember it on this device.
+      </div>
+      <div class="api-key-row">
+        <input type="text"
+               class="api-key-input"
+               id="inputGroqKey"
+               placeholder="gsk_..."
+               autocomplete="off"
+               spellcheck="false">
+        <button class="btn btn-primary"
+                id="btnSaveKey">
+          Save Key
+        </button>
+        <button class="btn btn-secondary"
+                id="btnTestKey">
+          Test Connection
+        </button>
+      </div>
+      <label class="api-key-remember">
+        <input type="checkbox"
+               id="inputRememberGroqKey">
+        <span>
+          Remember this API key on this personal device.
+        </span>
+      </label>
+      <div class="api-key-hint">
+        Leave unchecked on shared computers. If unchecked when saving,
+        any remembered key is removed from this browser.
+      </div>
+      <div class="api-key-status" id="keyStatus"></div>
+    </div>
+
+    <!-- Backup & Restore -->
+    <div class="settings-section">
+      <div class="settings-section-title">
+        💾 Backup & Restore
+      </div>
+      <div class="settings-section-desc">
+        Export your data to a JSON file or restore
+        a previous backup.
+      </div>
+      <div class="backup-actions">
+
+        <div class="backup-row">
+          <div class="backup-row-info">
+            <div class="backup-row-title">
+              Export Data
+            </div>
+            <div class="backup-row-desc">
+              Download all pieces, sections and
+              sessions as a JSON backup file.
+            </div>
+          </div>
+          <button class="btn btn-primary"
+                  id="btnExport">
+            Export JSON
+          </button>
+        </div>
+
+        <div class="backup-row">
+          <div class="backup-row-info">
+            <div class="backup-row-title">
+              Import Data
+            </div>
+            <div class="backup-row-desc">
+              Restore a previous backup.
+              Existing data will be replaced.
+            </div>
+          </div>
+          <label class="btn btn-secondary"
+                 style="cursor:pointer;">
+            Import JSON
+            <input type="file"
+                   id="fileImport"
+                   accept=".json"
+                   class="hidden">
+          </label>
+        </div>
+
+      </div>
+      <div class="import-status" id="importStatus"></div>
+    </div>
+
+    <!-- Danger zone -->
+    <div class="settings-section danger">
+      <div class="settings-section-title">
+        🗑️ Danger Zone
+      </div>
+      <div class="settings-section-desc">
+        Permanently delete all your pieces, sections
+        and practice history. This action cannot be
+        undone. Export your data first.
+      </div>
+      <button class="btn btn-danger"
+              id="btnResetApp">
+        Reset App — Delete All Data
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script type="module" src="js/settings.js"></script>
+<script src="js/fullscreen.js"></script>
+</body>
+</html>

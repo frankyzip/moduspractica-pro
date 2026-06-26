@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://parturamusic.be/ModusPractica_Pro/practice-session.html">
+  <title>ModusPractica Pro — Practice Session</title>
+  <link rel="icon" type="image/png" href="BreinLogo.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/practice-session.css">
+  <!-- Google Consent Mode v2 — standaard alles geweigerd voor EER -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage':         'denied',
+      'ad_user_data':       'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage':  'denied',
+      'region': ['BE','NL','DE','FR','ES','IT',
+                 'PL','SE','DK','FI','NO','AT',
+                 'CH','PT','IE','LU','CZ','SK',
+                 'HU','RO','BG','HR','SI','EE',
+                 'LV','LT','MT','CY','GR'],
+      'wait_for_update': 500
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async
+    src="https://www.googletagmanager.com/gtag/js?id=G-WJ7ZJJF6E5">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJ7ZJJF6E5');
+  </script>
+  <script>
+    (function () {
+      var c = localStorage.getItem('mp_ga_consent');
+      if (c === 'granted') {
+        gtag('consent', 'update', {
+          'analytics_storage':  'granted',
+          'ad_storage':         'denied',
+          'ad_user_data':       'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="session-page" id="sessionPage">
+
+  <!-- Topbar -->
+  <div class="session-topbar">
+    <a href="dashboard.html" class="session-topbar-brand">
+      <img src="BreinLogo.png" class="session-topbar-logo"
+           alt="ModusPractica">
+      <span class="session-topbar-name">ModusPractica</span>
+    </a>
+    <div class="session-topbar-divider"></div>
+    <div class="session-topbar-piece" id="topbarPiece">
+      Loading...
+    </div>
+    <span style="color:var(--text-muted); font-size:13px;">›</span>
+    <div class="session-topbar-section" id="topbarSection"></div>
+    <div class="session-topbar-zone" id="topbarZone">EXPLORATION</div>
+  </div>
+
+  <!-- Tweekolom body -->
+  <div class="session-body">
+
+    <!-- ══ LINKERKOLOM ══ -->
+    <div class="session-left">
+
+      <!-- Timer -->
+      <div class="session-panel">
+        <div class="panel-title">Session Timer</div>
+        <div class="timer-display"
+             id="timerDisplay"
+             contenteditable="true"
+             title="Click to edit manually (HH:MM:SS)">
+          00:00:00
+        </div>
+        <div class="timer-hint">
+          💡 Click time to edit manually
+        </div>
+        <div style="text-align:center; margin-top:6px;
+                    padding: 6px 12px;
+                    background: var(--success-light);
+                    border: 1px solid rgba(16,185,129,0.25);
+                    border-radius: var(--radius-sm);
+                    font-size: 11px;
+                    color: #065f46;
+                    line-height: 1.5;">
+          ⏱ Timer registers practice time for statistics
+          only.<br>
+          <strong>Time has no influence on scheduling.</strong>
+          Take all the rest you need.
+        </div>
+        <div class="timer-controls">
+          <button id="btnStart" class="timer-btn start">▶ Start</button>
+          <button id="btnFreePractice" class="timer-btn free">
+            🔍 Analysis
+          </button>
+          <button id="btnPause" class="timer-btn pause" disabled>
+            ⏸ Pause
+          </button>
+          <button id="btnStop" class="timer-btn stop" disabled>
+            ⏹ Stop
+          </button>
+        </div>
+      </div>
+
+      <!-- Tellers -->
+      <div class="session-panel">
+        <div class="panel-title">Practice Metrics</div>
+        <div class="counter-grid">
+
+          <div class="counter-row">
+            <label class="counter-label"
+                   title="Count a failure only when you
+                          actively attempt the full passage
+                          hands-together. Do NOT count
+                          mistakes during exploration,
+                          hands-separate practice or
+                          note-by-note learning.
+                          &#10;&#10;Time between attempts
+                          does NOT affect scheduling.
+                          Take all the rest you need between
+                          attempts — 5 seconds minimum is
+                          recommended (Gebrian method).">
+              Failed Attempts
+            </label>
+            <div class="counter-controls">
+              <button class="counter-btn" id="btnFailedMinus">−</button>
+              <span class="counter-value" id="failedAttempts">0</span>
+              <button class="counter-btn" id="btnFailedPlus">+</button>
+            </div>
+          </div>
+
+          <div class="counter-divider"></div>
+
+          <div class="counter-row">
+            <label class="counter-label"
+                   title="100%: target = errors. 50%: gentler ramp-up.">
+              Overlearning
+            </label>
+            <div class="intensity-btns">
+              <button class="intensity-btn" id="btn50">50%</button>
+              <button class="intensity-btn active" id="btn100">100%</button>
+            </div>
+          </div>
+
+          <div class="gebrian-toggle-row">
+            <label class="counter-label"
+                   title="Every failure adds +3 to target. Use for very difficult passages.">
+              Strict Gebrian
+            </label>
+            <div class="toggle-switch-wrapper">
+              <label class="toggle-switch">
+                <input type="checkbox" id="strictGebrianCheck">
+                <span class="toggle-track"></span>
+              </label>
+              <span id="focusActiveLabel"
+                    style="display:none; font-size:11px;
+                           font-weight:700; color:var(--danger);">
+                FOCUS ACTIVE
+              </span>
+            </div>
+          </div>
+
+          <div class="counter-row">
+            <label class="counter-label"
+                   title="Successful consecutive repetitions.
+                          &#10;&#10;Rest between reps:
+                          5 seconds minimum (Gebrian method).
+                          Every 3 reps: take a micro-break
+                          of 10-15 seconds.
+                          &#10;&#10;These rests are part of
+                          the learning process — they do NOT
+                          count as lost time and have NO
+                          influence on scheduling.
+                          &#10;&#10;If this stays at 0:
+                          the session is saved as Incomplete.
+                          The section returns tomorrow —
+                          no penalty on your streak.">
+              Correct Reps
+            </label>
+            <div class="counter-controls">
+              <button class="counter-btn" id="btnCorrectMinus">−</button>
+              <span class="counter-value" id="correctRepetitions">0</span>
+              <button class="counter-btn" id="btnCorrectPlus">+</button>
+              <button class="counter-btn reset-btn" id="btnCorrectReset">↺</button>
+            </div>
+          </div>
+
+          <div class="counter-row">
+            <label class="counter-label"
+                   title="Dr. Gebrian method: target grows live as you make errors.">
+              Target Reps
+            </label>
+            <div class="counter-controls">
+              <button class="counter-btn" id="btnTargetMinus">−</button>
+              <span class="counter-value" id="targetReps">6</span>
+              <button class="counter-btn" id="btnTargetPlus">+</button>
+              <button class="counter-btn reset-btn" id="btnTargetReset">↺</button>
+            </div>
+          </div>
+
+          <div class="counter-row">
+            <label class="counter-label"
+                   title="Auto-counter: memory retrieval failures. Affects interval.">
+              Streak Resets
+            </label>
+            <div class="counter-controls">
+              <span class="counter-value danger" id="streakResets">0</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 10px;
+                      padding: 8px 12px;
+                      background: var(--accent-light);
+                      border: 1px solid
+                        rgba(30,110,181,0.2);
+                      border-radius: var(--radius-sm);
+                      font-size: 11px;
+                      color: var(--accent);
+                      line-height: 1.5;">
+            🧠 <strong>No time pressure:</strong>
+            Only your correct/failed ratio affects
+            scheduling — not how long you take between
+            attempts. Rest as long as you need.
+          </div>
+
+        </div>
+
+        <div class="frustration-banner" id="frustrationBanner">
+          ⚠️ <strong>Warning (5 failures or resets):</strong>
+          Motor resistance increasing.
+          Consider lowering your tempo, reducing the
+          section size, or taking a short break.
+          At <strong>8 failures or resets</strong>
+          the session will stop automatically.
+          <div class="frustration-banner-actions">
+            <button class="btn btn-sm btn-secondary" id="btnAcceptFrustration">
+              Lower target
+            </button>
+            <button class="btn btn-sm" id="btnDismissFrustration"
+                    style="background:transparent;
+                           border:1px solid var(--border);
+                           color:var(--text-secondary);">
+              Dismiss
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tempo -->
+      <div class="session-panel">
+        <div class="panel-title">
+          Tempo (BPM)
+          <span style="font-weight:400; text-transform:none; font-size:10px;">
+            — optional
+          </span>
+        </div>
+        <div class="tempo-grid">
+          <div class="tempo-field">
+            <label>Achieved Tempo</label>
+            <input type="number" class="tempo-input" id="achievedTempo"
+                   min="30" max="300" placeholder="BPM">
+          </div>
+          <div class="tempo-field">
+            <label>Target Tempo</label>
+            <input type="number" class="tempo-input" id="targetTempo"
+                   min="30" max="300" placeholder="BPM">
+          </div>
+        </div>
+        <div class="tempo-info-row" id="tempoInfoRow" style="display:none;">
+          <span id="tempoInfoText"></span>
+        </div>
+        <div class="tempo-info-row" id="tempoWarningRow"
+             style="display:none; background:var(--warning-light); color:#92400e;">
+          <span id="tempoWarningText"></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══ RECHTERKOLOM ══ -->
+    <div class="session-right">
+
+      <div class="session-panel">
+        <div class="panel-title">Energy & Focus Level</div>
+        <div class="energy-grid">
+          <button class="energy-btn" id="energyHigh">⚡ High</button>
+          <button class="energy-btn selected" id="energyNormal">😐 Normal</button>
+          <button class="energy-btn" id="energyLow">😴 Low</button>
+        </div>
+      </div>
+
+      <div class="session-panel">
+        <div class="panel-title">Previous Session Notes</div>
+        <div class="prev-notes" id="prevNotes">
+          No previous notes for this section.
+        </div>
+      </div>
+
+      <div class="session-panel" style="flex:1; display:flex; flex-direction:column;">
+        <div class="panel-title">Session Notes</div>
+        <textarea class="notes-area" id="sessionNotes"
+                  placeholder="Add notes about this practice session..."
+                  style="flex:1; min-height:120px;"></textarea>
+      </div>
+
+      <div class="session-panel">
+        <div class="panel-title">Live Planning Preview</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Stability</div>
+            <div class="status-card-value" id="liveStability">—</div>
+            <div class="status-card-sub" id="liveStabilityDays">days</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Comfort</div>
+            <div class="status-card-value" id="liveDifficulty">—</div>
+            <div class="status-card-sub">level</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Next Practice</div>
+            <div class="status-card-value" id="liveNextDate">—</div>
+            <div class="status-card-sub" id="liveNextDays"></div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Tempo</div>
+            <div class="status-card-value" id="liveTempo">—</div>
+            <div class="status-card-sub" id="liveTempoTarget"></div>
+          </div>
+        </div>
+        <div style="margin-top:8px; font-size:11px; color:var(--text-muted);
+                    font-style:italic;">
+          Updates after session is saved.
+        </div>
+      </div>
+
+      <div class="session-actions">
+        <button class="btn btn-secondary" id="btnCancel">
+          Cancel
+        </button>
+        <button class="btn btn-primary" id="btnComplete" disabled>
+          Complete Session ✓
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="micro-break-toast" id="microBreakToast" aria-live="polite">
+  <div class="micro-break-icon">🧠</div>
+  <div class="micro-break-text">
+    <strong>Micro-Break: 10–15 seconds</strong>
+    <small>Stop completely. Let your brain consolidate.</small>
+  </div>
+</div>
+
+<div class="unsaved-indicator" id="unsavedIndicator">
+  💾 Unsaved Changes
+</div>
+
+<div class="modal-overlay" id="evalModal">
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h2 id="modalTitle">How was your practice?</h2>
+      <p id="modalSubtitle">
+        Evaluate your performance to improve scheduling
+      </p>
+    </div>
+
+    <div class="session-summary-panel" id="sessionSummaryPanel"></div>
+
+    <div id="freePracticeNotice"
+         style="display:none; padding:14px;
+                background:var(--accent-light);
+                border:1px solid rgba(30,110,181,0.3);
+                border-radius:var(--radius-md);
+                margin-bottom:16px; font-size:13px;
+                text-align:center;">
+      🔍 <strong>Analysis session</strong> —
+      no adaptive scheduling will be updated.
+      Your analysis time has been logged.
+    </div>
+
+    <div class="eval-options" id="evalOptions">
+      <div class="eval-option poor" id="evalPoor">
+        <div class="eval-title">😔 Poor</div>
+        <div class="eval-desc">Struggled significantly</div>
+      </div>
+      <div class="eval-option fair" id="evalFair">
+        <div class="eval-title">😐 Fair</div>
+        <div class="eval-desc">Progress but challenging</div>
+      </div>
+      <div class="eval-option good" id="evalGood">
+        <div class="eval-title">😊 Good</div>
+        <div class="eval-desc">Comfortable, minor issues</div>
+      </div>
+      <div class="eval-option excellent" id="evalExcellent">
+        <div class="eval-title">🎉 Excellent</div>
+        <div class="eval-desc">Flawless, confident</div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="btnCancelEval">Cancel</button>
+      <button class="btn btn-primary" id="btnSaveEval" disabled>
+        Save Session
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" id="hardStopModal">
+  <div class="modal-box hard-stop-box">
+
+    <div class="hard-stop-icon">🛑</div>
+
+    <div class="modal-header">
+      <h2>Practice Stopped</h2>
+      <p id="hardStopMessage">
+        You have reached 8 failures or resets.<br>
+        This section is currently too difficult.
+        To succeed, try a slower tempo or divide the
+        passage into smaller fragments.
+      </p>
+    </div>
+
+    <div class="hard-stop-science">
+      <strong>Why we stop here:</strong>
+      Continuing to practice with repeated failures
+      actively disrupts motor memory consolidation
+      (Rosenbaum, 2010). Rest is more effective
+      than persistence at this point.
+    </div>
+
+    <div class="hard-stop-options">
+
+      <div class="hard-stop-option" id="btnHardStopArchive">
+        <div class="hard-stop-option-icon">📦</div>
+        <div class="hard-stop-option-content">
+          <div class="hard-stop-option-title">
+            Archive & Split
+          </div>
+          <div class="hard-stop-option-desc">
+            Archive this section. Break it into
+            smaller parts or lower the tempo
+            before adding it back.
+            <br>
+            <strong>Recommended</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="hard-stop-option" id="btnHardStopSave">
+        <div class="hard-stop-option-icon">💾</div>
+        <div class="hard-stop-option-content">
+          <div class="hard-stop-option-title">
+            Save & Return
+          </div>
+          <div class="hard-stop-option-desc">
+            Save this session as FrustrationGuard.
+            The section will return tomorrow
+            with a shorter interval.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;
+                margin-top: 12px;
+                font-size: 11px;
+                color: var(--text-muted);">
+      Current tempo:
+      <strong id="hardStopBpm"></strong>
+    </div>
+
+  </div>
+</div>
+
+<script type="module" src="js/practice-session.js"></script>
+<script src="js/fullscreen.js"></script>
+</body>
+</html>

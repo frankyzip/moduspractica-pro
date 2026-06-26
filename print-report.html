@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,
+    initial-scale=1.0">
+  <title>ModusPractica Pro — Practice Report</title>
+  <link rel="icon" type="image/png" href="BreinLogo.png">
+  <style>
+
+    /* ── Basis ── */
+    :root {
+      --accent: #1e6eb5;
+      --accent-2: #e8640a;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --font-sans: 'Inter', 'Segoe UI',
+                   system-ui, sans-serif;
+      --font-mono: 'SF Mono', 'Monaco',
+                   'Cascadia Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: white;
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Screen-only elementen ── */
+    .screen-only {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .screen-only h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-right: auto;
+    }
+
+    /* ── Rapport header ── */
+    .report-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .report-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .report-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+    }
+
+    .report-brand-text h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    .report-brand-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .report-meta {
+      text-align: right;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .report-meta strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    /* ── Sectietitels ── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .report-section {
+      margin-bottom: 28px;
+    }
+
+    /* ── Samenvatting cards ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .summary-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .summary-card-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .summary-card-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    /* ── Statistieken rij ── */
+    .stats-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .stat-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+    }
+
+    /* ── Stukken tabel ── */
+    .pieces-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .pieces-table th {
+      text-align: left;
+      padding: 8px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .pieces-table th.right {
+      text-align: right;
+    }
+
+    .pieces-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .pieces-table td.right {
+      text-align: right;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+
+    .pieces-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .piece-title-cell {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .piece-composer-cell {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── Secties per stuk ── */
+    .sections-subtable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+
+    .sections-subtable td {
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      border: none;
+    }
+
+    .sections-subtable td:first-child {
+      font-weight: 600;
+      color: var(--text-primary);
+      padding-left: 0;
+    }
+
+    /* ── Overdue markering ── */
+    .overdue-row td {
+      background: #fef2f2;
+    }
+
+    .overdue-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      background: #ef4444;
+      color: white;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 700;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .due-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      background: #f59e0b;
+      color: white;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 700;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* ── Stabiliteit indicator ── */
+    .stability-bar {
+      display: inline-block;
+      width: 60px;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
+    .stability-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    /* ── AI Analyse sectie ── */
+    .ai-section {
+      margin-top: 28px;
+      padding: 20px;
+      background: #f0f7ff;
+      border: 1px solid #c7dcf7;
+      border-radius: 10px;
+      page-break-inside: avoid;
+    }
+
+    .ai-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-content {
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-primary);
+    }
+
+    .ai-content h3, .ai-content h4 {
+      color: var(--accent);
+      margin: 12px 0 4px;
+      font-size: 13px;
+    }
+
+    .ai-content strong {
+      color: var(--text-primary);
+    }
+
+    .ai-loading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      padding: 12px 0;
+    }
+
+    .ai-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Footer ── */
+    .report-footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ── Knoppen (screen only) ── */
+    .btn {
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-warning {
+      background: linear-gradient(
+        135deg, var(--warning), #fbbf24
+      );
+      color: #000;
+      font-weight: 800;
+    }
+
+    /* ── Print media ── */
+    @media print {
+      .screen-only { display: none !important; }
+
+      body {
+        padding: 16px;
+        font-size: 11px;
+      }
+
+      .report-header {
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+      }
+
+      .summary-card-value { font-size: 18px; }
+      .stat-value { font-size: 13px; }
+
+      .ai-section {
+        background: white;
+        border: 1px solid #ccc;
+      }
+
+      /* Vermijd pagina-breuken in tabellen */
+      .pieces-table tr {
+        page-break-inside: avoid;
+      }
+
+      .report-section {
+        page-break-inside: avoid;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Screen-only: knoppen en status -->
+  <div class="screen-only">
+    <h2>📄 ModusPractica Practice Report</h2>
+    <div id="aiStatus" style="font-size:12px;
+         color: #475569; margin-right: auto;">
+      Loading data...
+    </div>
+    <button class="btn btn-secondary"
+            id="btnClose">
+      ✕ Close
+    </button>
+    <button class="btn btn-primary"
+            id="btnPrint"
+            disabled>
+      🖨️ Print / Save PDF
+    </button>
+  </div>
+
+  <!-- Rapport inhoud -->
+  <div id="reportContent" style="display:none;">
+
+    <!-- Header -->
+    <div class="report-header">
+      <div class="report-brand">
+        <img src="BreinLogo.png"
+             class="report-logo"
+             alt="ModusPractica Pro">
+        <div class="report-brand-text">
+          <h1>ModusPractica Pro</h1>
+          <p>Intelligent Practice Planner ·
+             parturamusic.be</p>
+        </div>
+      </div>
+      <div class="report-meta">
+        <strong id="reportDate"></strong>
+        <span>Practice Progress Report</span>
+        <br>
+        <span id="reportPeriod"
+              style="font-size:11px;">
+        </span>
+      </div>
+    </div>
+
+    <!-- Samenvatting -->
+    <div class="report-section">
+      <div class="section-title">Overview</div>
+      <div class="summary-grid" id="summaryGrid">
+      </div>
+      <div class="stats-row" id="statsRow">
+      </div>
+    </div>
+
+    <!-- Repertoire per stuk -->
+    <div class="report-section">
+      <div class="section-title">
+        Repertoire — Sections & Planning
+      </div>
+      <table class="pieces-table" id="piecesTable">
+        <thead>
+          <tr>
+            <th>Piece / Section</th>
+            <th class="right">Stability</th>
+            <th class="right">Comfort</th>
+            <th class="right">Tempo</th>
+            <th class="right">Next Practice</th>
+          </tr>
+        </thead>
+        <tbody id="piecesTableBody">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Stabiliteitsverdeling -->
+    <div class="report-section">
+      <div class="section-title">
+        Stability Distribution
+      </div>
+      <div class="summary-grid" id="stabilityGrid">
+      </div>
+    </div>
+
+    <!-- AI Analyse -->
+    <div class="ai-section" id="aiSection">
+      <div class="ai-section-title">
+        🤖 AI Progress Analysis
+      </div>
+      <div id="aiContent" class="ai-content">
+        <div class="ai-loading" id="aiLoading">
+          <div class="ai-spinner"></div>
+          <span>Generating AI analysis...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="report-footer">
+      <span>© 2026 Frank De Baere ·
+            ModusPractica Pro</span>
+      <span id="footerDate"></span>
+    </div>
+
+  </div>
+
+<script type="module">
+import { db } from './js/db.js';
+import { formatDuration, getTodayLocal,
+         toDateOnly, isSectionInPlanning } from './js/utils.js';
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded',
+  async () => {
+    await db.init();
+    await buildReport();
+  }
+);
+
+async function buildReport() {
+  const sections = await db.getAllSections();
+  const sessions = await db.getAllSessions();
+  const pieces = await db.getAllPieces();
+  const today = getTodayLocal();
+
+  // Datum
+  const now = new Date();
+  document.getElementById('reportDate').textContent =
+    now.toLocaleDateString(undefined, {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  document.getElementById('footerDate').textContent =
+    now.toISOString().split('T')[0];
+
+  // Actieve secties (excl. stats-only stukken)
+  const pieceById = new Map(pieces.map((p) => [p.id, p]));
+  const active = sections.filter((s) => isSectionInPlanning(s, pieceById));
+  const overdue = active.filter(
+    s => toDateOnly(s.nextPracticeDate) < today
+  );
+  const dueToday = active.filter(s => {
+    const d = toDateOnly(s.nextPracticeDate);
+    return d && d.getTime() === today.getTime();
+  });
+
+  // Sessies laatste 30 dagen
+  const cutoff30 = new Date(
+    now.getTime() - 30 * 86400000
+  );
+  const recent = sessions.filter(
+    s => new Date(s.date) >= cutoff30
+  );
+  const training = recent.filter(
+    s => s.type !== 'analysis'
+  );
+
+  const totalSeconds = recent.reduce(
+    (sum, s) => sum + (s.duration || 0), 0
+  );
+
+  let totalCorrect = 0;
+  let totalAttempts = 0;
+  let frustrationCount = 0;
+
+  training.forEach(s => {
+    const match = s.feedback?.match(
+      /\((\d+)C\/(\d+)F\)/
+    );
+    if (match) {
+      totalCorrect += parseInt(match[1], 10);
+      const failed = parseInt(match[2], 10);
+      totalAttempts += parseInt(match[1], 10) + failed;
+    }
+    if (s.feedback?.includes('FrustrationGuard')) {
+      frustrationCount++;
+    }
+  });
+
+  const successRate = totalAttempts > 0
+    ? Math.round(
+        (totalCorrect / totalAttempts) * 100
+      ) + '%'
+    : '—';
+
+  // Streak berekenen
+  const dayMs = 86400000;
+  const uniqueDays = [...new Set(
+    sessions.map(s => {
+      const d = new Date(s.date);
+      return new Date(
+        d.getFullYear(),
+        d.getMonth(),
+        d.getDate()
+      ).getTime();
+    })
+  )].sort((a, b) => a - b);
+
+  let currentStreak = 0;
+  if (uniqueDays.length > 0) {
+    const lastDay = uniqueDays[uniqueDays.length - 1];
+    const todayMs = today.getTime();
+    const diff = Math.round((todayMs - lastDay) / dayMs);
+    if (diff <= 1) {
+      currentStreak = 1;
+      for (let i = uniqueDays.length - 2; i >= 0; i--) {
+        if (uniqueDays[i+1] - uniqueDays[i] === dayMs) {
+          currentStreak++;
+        } else break;
+      }
+    }
+  }
+
+  // ── Render samenvatting ──
+  document.getElementById('reportPeriod').textContent =
+    'Last 30 days · ' + sessions.length +
+    ' total sessions';
+
+  document.getElementById('summaryGrid').innerHTML = `
+    <div class="summary-card">
+      <div class="summary-card-value">
+        ${pieces.filter(p => !p.archived).length}
+      </div>
+      <div class="summary-card-label">
+        Active Pieces
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-value">
+        ${active.length}
+      </div>
+      <div class="summary-card-label">
+        Active Sections
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-value"
+           style="color:${overdue.length > 0
+             ? '#ef4444' : '#10b981'}">
+        ${overdue.length}
+      </div>
+      <div class="summary-card-label">
+        Overdue
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-value"
+           style="color:#e8640a">
+        ${currentStreak}
+      </div>
+      <div class="summary-card-label">
+        Day Streak
+      </div>
+    </div>
+  `;
+
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-item">
+      <span class="stat-label">
+        Practice Time (30d)
+      </span>
+      <span class="stat-value">
+        ${formatDuration(totalSeconds)}
+      </span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">
+        Training Sessions
+      </span>
+      <span class="stat-value">
+        ${training.length}
+      </span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Success Rate</span>
+      <span class="stat-value">${successRate}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">
+        FrustrationGuard
+      </span>
+      <span class="stat-value">
+        ${frustrationCount}x
+      </span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Due Today</span>
+      <span class="stat-value">
+        ${dueToday.length}
+      </span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">
+        Total Sessions
+      </span>
+      <span class="stat-value">
+        ${sessions.length}
+      </span>
+    </div>
+  `;
+
+  // ── Render repertoire tabel ──
+  const tbody = document.getElementById(
+    'piecesTableBody'
+  );
+  const activePieces = pieces.filter(p => !p.archived);
+
+  activePieces.sort((a, b) =>
+    a.title.localeCompare(b.title)
+  );
+
+  activePieces.forEach(piece => {
+    const pieceSections = active.filter(
+      s => s.pieceId === piece.id
+    );
+    if (pieceSections.length === 0) return;
+
+    // Stuk header rij
+    const pieceRow = document.createElement('tr');
+    pieceRow.style.background = '#f8fafc';
+    pieceRow.innerHTML = `
+      <td colspan="5"
+          style="padding: 10px 10px 4px;
+                 border-bottom: 1px solid #e2e8f0;">
+        <span class="piece-title-cell">
+          ${piece.title}
+        </span>
+        ${piece.composer
+          ? '<span class="piece-composer-cell"> · ' +
+            piece.composer + '</span>'
+          : ''}
+      </td>
+    `;
+    tbody.appendChild(pieceRow);
+
+    // Sectie rijen
+    pieceSections
+      .sort((a, b) => {
+        const dateA = a.nextPracticeDate
+          ? toDateOnly(a.nextPracticeDate)
+          : new Date(0);
+        const dateB = b.nextPracticeDate
+          ? toDateOnly(b.nextPracticeDate)
+          : new Date(0);
+        return dateA - dateB;
+      })
+      .forEach(section => {
+        const nextDate = toDateOnly(
+          section.nextPracticeDate
+        );
+        const isOverdue = nextDate && nextDate < today;
+        const isToday = nextDate && nextDate.getTime()
+          === today.getTime();
+
+        const diffDays = nextDate
+          ? Math.round((nextDate - today) / 86400000)
+          : null;
+
+        let nextText = '—';
+        if (isOverdue) {
+          const daysLate = Math.abs(diffDays);
+          nextText = daysLate + 'd overdue';
+        } else if (isToday) {
+          nextText = 'Today';
+        } else if (diffDays !== null) {
+          nextText = 'in ' + diffDays + 'd';
+        }
+
+        const stabilityPct = Math.round(
+          (1 - (section.difficulty || 0.3)) * 100
+        );
+        const stability = Math.round(
+          (section.stability || 1) * 10
+        ) / 10;
+
+        let fillColor = '#10b981';
+        if (stabilityPct < 40) fillColor = '#ef4444';
+        else if (stabilityPct < 70)
+          fillColor = '#f59e0b';
+
+        const bpmText = section.currentBpm &&
+          section.targetBpm
+          ? section.currentBpm + ' / ' +
+            section.targetBpm
+          : '—';
+
+        const row = document.createElement('tr');
+        if (isOverdue) row.className = 'overdue-row';
+
+        row.innerHTML = `
+          <td style="padding-left: 24px;">
+            ${section.section ||
+              section.barRange || '—'}
+            ${isOverdue
+              ? '<span class="overdue-badge">' +
+                'OVERDUE</span>'
+              : isToday
+                ? '<span class="due-badge">' +
+                  'TODAY</span>'
+                : ''}
+          </td>
+          <td class="right">${stability}d</td>
+          <td class="right">
+            <span class="stability-bar">
+              <span class="stability-fill"
+                    style="width:${stabilityPct}%;
+                           background:${fillColor};">
+              </span>
+            </span>
+            ${stabilityPct}%
+          </td>
+          <td class="right">${bpmText} BPM</td>
+          <td class="right"
+              style="color:${isOverdue
+                ? '#ef4444'
+                : isToday
+                  ? '#e8640a'
+                  : '#475569'}">
+            ${nextText}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+  });
+
+  // ── Stabiliteitsoverzicht ──
+  let d1 = 0, d2 = 0, d3 = 0, d4 = 0;
+  active.forEach(s => {
+    const st = s.stability || 1;
+    if (st <= 3) d1++;
+    else if (st <= 7) d2++;
+    else if (st <= 30) d3++;
+    else d4++;
+  });
+
+  document.getElementById('stabilityGrid')
+    .innerHTML = `
+    <div class="summary-card">
+      <div class="summary-card-value">${d1}</div>
+      <div class="summary-card-label">1–3 days</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-value">${d2}</div>
+      <div class="summary-card-label">4–7 days</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-value">${d3}</div>
+      <div class="summary-card-label">8–30 days</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-value">${d4}</div>
+      <div class="summary-card-label">30+ days</div>
+    </div>
+  `;
+
+  // ── Rapport zichtbaar maken ──
+  document.getElementById('reportContent')
+    .style.display = 'block';
+  document.getElementById('btnPrint').disabled = false;
+
+  // ── AI Analyse ──
+  const apiKey = sessionStorage.getItem('mp_groq_key');
+
+  if (!apiKey) {
+    // Geen API key — toon puur data fallback
+    document.getElementById('aiSection')
+      .style.display = 'none';
+    document.getElementById('aiStatus').textContent =
+      '✓ Report generated (no AI key — data only)';
+    return;
+  }
+
+  document.getElementById('aiStatus').textContent =
+    '⏳ Generating AI analysis...';
+
+  try {
+    // Bouw analytics payload
+    const payload = buildAnalyticsPayload(
+      sections, sessions, pieces
+    );
+
+    const response = await fetch(
+      'https://api.groq.com/openai/v1/chat/completions',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + apiKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            {
+              role: 'system',
+              content:
+                'You are the AI analyst of ' +
+                'ModusPractica Pro, an intelligent ' +
+                'piano practice planner based on ' +
+                'Spaced Repetition (FSRS).\n\n' +
+                'Write a concise practice progress ' +
+                'report for a printed document. ' +
+                'Use clear sections with headers. ' +
+                'Be direct and analytical — no ' +
+                'pleasantries. Focus on:\n' +
+                '1. Overall practice consistency\n' +
+                '2. Pieces needing urgent attention\n' +
+                '3. Tempo progression highlights\n' +
+                '4. Stability trends\n' +
+                '5. Three concrete action points\n\n' +
+                'Keep it concise — max 400 words. ' +
+                'This will be printed.',
+            },
+            {
+              role: 'user',
+              content:
+                'Generate a practice report:\n\n' +
+                JSON.stringify(payload, null, 2),
+            },
+          ],
+          temperature: 0.2,
+          max_tokens: 600,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        'Groq API Error: ' + response.status
+      );
+    }
+
+    const result = await response.json();
+    const markdown =
+      result.choices[0].message.content;
+
+    // Markdown naar HTML
+    const html = markdown
+      .replace(/\n/g, '<br>')
+      .replace(
+        /### (.*?)(<br>|$)/g,
+        '<h4>$1</h4>'
+      )
+      .replace(
+        /## (.*?)(<br>|$)/g,
+        '<h3>$1</h3>'
+      )
+      .replace(
+        /\*\*(.*?)\*\*/g,
+        '<strong>$1</strong>'
+      )
+      .replace(
+        /- (.*?)(<br>|$)/g,
+        '<div style="margin-left:16px; ' +
+          'margin-bottom:3px;">• $1</div>'
+      );
+
+    document.getElementById('aiContent').innerHTML =
+      html;
+    document.getElementById('aiStatus').textContent =
+      '✓ Report generated with AI analysis';
+
+  } catch (err) {
+    console.error('AI error:', err);
+    document.getElementById('aiContent').innerHTML =
+      '<p style="color:#475569; font-style:italic;">' +
+      'AI analysis unavailable: ' + err.message +
+      '</p>';
+    document.getElementById('aiStatus').textContent =
+      '✓ Report generated (AI unavailable)';
+  }
+}
+
+// ── Analytics payload voor AI ──
+function buildAnalyticsPayload(sections, sessions, pieces) {
+  const now = new Date();
+  const today = getTodayLocal();
+  const cutoff30 = new Date(
+    now.getTime() - 30 * 86400000
+  );
+
+  const pieceById = new Map((pieces || []).map((p) => [p.id, p]));
+  const active = sections.filter((s) => isSectionInPlanning(s, pieceById));
+  const overdue = active.filter(
+    s => toDateOnly(s.nextPracticeDate) < today
+  );
+  const recent = sessions.filter(
+    s => new Date(s.date) >= cutoff30
+  );
+  const training = recent.filter(
+    s => s.type !== 'analysis'
+  );
+
+  let totalCorrect = 0, totalFailed = 0,
+      frustrationCount = 0;
+
+  training.forEach(s => {
+    const match = s.feedback?.match(
+      /\((\d+)C\/(\d+)F\)/
+    );
+    if (match) {
+      totalCorrect += parseInt(match[1], 10);
+      totalFailed += parseInt(match[2], 10);
+    }
+    if (s.feedback?.includes('FrustrationGuard')) {
+      frustrationCount++;
+    }
+  });
+
+  const totalReps = totalCorrect + totalFailed;
+  const successRate = totalReps > 0
+    ? Math.round(
+        (totalCorrect / totalReps) * 100
+      ) + '%'
+    : 'no data';
+
+  const stabilityBuckets = {
+    '1-3d': 0, '4-7d': 0,
+    '8-30d': 0, '30d+': 0
+  };
+  active.forEach(s => {
+    const st = s.stability || 1;
+    if (st <= 3) stabilityBuckets['1-3d']++;
+    else if (st <= 7) stabilityBuckets['4-7d']++;
+    else if (st <= 30) stabilityBuckets['8-30d']++;
+    else stabilityBuckets['30d+']++;
+  });
+
+  const neglected = [...overdue]
+    .sort((a, b) =>
+      new Date(a.nextPracticeDate) -
+      new Date(b.nextPracticeDate)
+    )
+    .slice(0, 5)
+    .map(s => ({
+      piece: s.title,
+      section: s.section || s.barRange,
+      overdueDays: Math.round(
+        (today - toDateOnly(s.nextPracticeDate))
+        / 86400000
+      ),
+      stability: Math.round(
+        (s.stability || 1) * 10
+      ) / 10,
+    }));
+
+  const tempoProgress = {};
+  active.forEach(s => {
+    if (!tempoProgress[s.title]) {
+      tempoProgress[s.title] = [];
+    }
+    if (s.currentBpm && s.targetBpm) {
+      tempoProgress[s.title].push({
+        section: s.section || s.barRange,
+        current: s.currentBpm,
+        target: s.targetBpm,
+        progress: Math.round(
+          (s.currentBpm / s.targetBpm) * 100
+        ) + '%',
+      });
+    }
+  });
+
+  return {
+    reportDate: now.toISOString().split('T')[0],
+    repertoire: {
+      activeSections: active.length,
+      overdueSections: overdue.length,
+    },
+    last30Days: {
+      trainingSessions: training.length,
+      successRate,
+      totalCorrectReps: totalCorrect,
+      totalFailedReps: totalFailed,
+      frustrationGuardCount: frustrationCount,
+      totalMinutes: Math.round(
+        training.reduce(
+          (s, x) => s + (x.duration || 0), 0
+        ) / 60
+      ),
+    },
+    stabilityDistribution: stabilityBuckets,
+    mostNeglectedSections: neglected,
+    tempoProgressByPiece: tempoProgress,
+  };
+}
+
+document.getElementById('btnClose')
+  ?.addEventListener('click', () => window.close());
+document.getElementById('btnPrint')
+  ?.addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>

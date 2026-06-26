@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://parturamusic.be/ModusPractica_Pro/dashboard.html">
+  <title>ModusPractica Pro — Dashboard</title>
+  <link rel="icon" type="image/png" href="BreinLogo.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <!-- Google Consent Mode v2 — standaard alles geweigerd voor EER -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage':         'denied',
+      'ad_user_data':       'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage':  'denied',
+      'region': ['BE','NL','DE','FR','ES','IT',
+                 'PL','SE','DK','FI','NO','AT',
+                 'CH','PT','IE','LU','CZ','SK',
+                 'HU','RO','BG','HR','SI','EE',
+                 'LV','LT','MT','CY','GR'],
+      'wait_for_update': 500
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async
+    src="https://www.googletagmanager.com/gtag/js?id=G-WJ7ZJJF6E5">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJ7ZJJF6E5');
+  </script>
+</head>
+<body>
+
+<!-- ══ WELCOME MODAL v1.1.2 ══ -->
+<div id="mp-coming-soon-overlay" style="
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 99998;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+">
+  <div style="
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    max-width: 540px;
+    width: 100%;
+    padding: 32px;
+    position: relative;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    font-family: 'Inter','Segoe UI',sans-serif;
+    max-height: 90vh;
+    overflow-y: auto;
+  ">
+    <!-- Sluitknop -->
+    <button onclick="mpCloseWelcome()" style="
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    ">✕</button>
+
+    <!-- Header -->
+    <div style="margin-bottom: 20px;">
+      <div style="font-size: 28px; margin-bottom: 10px;">🎹</div>
+      <div style="
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        margin-bottom: 6px;
+      ">Welcome to ModusPractica Pro
+        <span style="
+          font-size: 12px;
+          font-weight: 700;
+          color: var(--accent);
+          background: var(--accent-light);
+          border: 1px solid rgba(30,110,181,0.2);
+          border-radius: 999px;
+          padding: 2px 10px;
+          margin-left: 8px;
+          vertical-align: middle;
+          font-family: monospace;
+        ">v1.1.9</span>
+      </div>
+      <p style="
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 0;
+      ">Practice smarter, not longer.</p>
+    </div>
+
+    <!-- Intro -->
+    <p style="
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    ">
+      An intelligent practice planner built on
+      peer-reviewed motor learning science.
+      Schedule what to practise and when, track your
+      progress over time, and keep your scores and
+      resources one click away —
+      designed with pianists in mind, but equally
+      powerful for
+      <strong style="color:var(--text-primary);">
+        any discipline that requires repeated,
+        structured motor skill development.
+      </strong>
+    </p>
+
+    <!-- Feature lijst -->
+    <div style="
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    ">
+      <div style="
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      ">What makes it different</div>
+
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        🧠 <strong style="color:var(--text-primary);">FSRS spaced repetition engine</strong>
+        — schedules each section at the exact moment
+        your memory needs it
+      </div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        🎵 <strong style="color:var(--text-primary);">Automatic BPM progression</strong>
+        — tempo advances proportionally as your
+        motor memory consolidates
+      </div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        🛡️ <strong style="color:var(--text-primary);">FrustrationGuard</strong>
+        — stops sessions before frustration encodes
+        errors into muscle memory
+      </div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        📅 <strong style="color:var(--text-primary);">Schedule month view</strong>
+        — calendar overview of practice days and
+        upcoming due sections
+      </div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        🔗 <strong style="color:var(--text-primary);">Links on pieces</strong>
+        — attach sheet music, videos, or files;
+        open them from your repertoire in one click
+      </div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        📊 <strong style="color:var(--text-primary);">Statistics &amp; streaks</strong>
+        — practice time, progress charts, and
+        optional Groq AI analysis of your history
+      </div>
+    </div>
+
+    <!-- Disciplines -->
+    <div style="
+      background: var(--accent-2-light);
+      border: 1px solid rgba(232,100,10,0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    ">
+      🎸🩰🥋🎭🗣️⚽
+      <strong style="color:var(--accent-2);">
+        Works for piano, guitar, violin, dance,
+        martial arts, acting, sports
+      </strong>
+      — any skill built through repetition.
+    </div>
+
+    <!-- Privacy -->
+    <div style="
+      background: rgba(30,110,181,0.06);
+      border: 1px solid rgba(30,110,181,0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    ">
+      🔒 <strong style="color:var(--accent);">
+        All data stays on your device.
+      </strong>
+      No account, no cloud, no ads.
+    </div>
+
+    <!-- Footer -->
+    <p style="
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      text-align: center;
+      font-style: italic;
+    ">
+      A Belgian product, developed in Flanders ·
+      Version 1.1.9 ·
+      <a href="https://www.parturamusic.be"
+         target="_blank"
+         style="color:var(--accent);
+                text-decoration:none;">
+        parturamusic.be
+      </a>
+    </p>
+
+    <!-- Sluitknop -->
+    <button onclick="mpCloseWelcome()" style="
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+    ">
+      Let's practice! 🎹
+    </button>
+  </div>
+</div>
+
+<!-- ══ WHAT'S NEW MODAL v1.1.9 ══ -->
+<div id="mp-whatsnew-overlay" style="
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 99998;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+">
+  <div style="
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    max-width: 540px;
+    width: 100%;
+    padding: 32px;
+    position: relative;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    font-family: 'Inter','Segoe UI',sans-serif;
+    max-height: 90vh;
+    overflow-y: auto;
+  ">
+    <!-- Sluitknop -->
+    <button onclick="mpCloseWhatsnew()" style="
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    ">✕</button>
+
+    <!-- Header -->
+    <div style="margin-bottom: 20px;">
+      <div style="font-size: 28px; margin-bottom: 10px;">✨</div>
+      <div style="
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        margin-bottom: 6px;
+      ">What's new in version 1.1.9</div>
+      <p style="
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 0;
+      ">June 2026 update</p>
+    </div>
+
+    <!-- Feature lijst -->
+    <div style="
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    ">
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        🔗 <strong style="color:var(--text-primary);">Links on pieces</strong>
+        — attach a URL to sheet music, a video, or any other source;
+        the link icon in your repertoire opens it in a new tab
+      </div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        ✏️ <strong style="color:var(--text-primary);">Add or change anytime</strong>
+        — use the link button in the piece detail view; leave the
+        field empty to remove a link
+      </div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+        🎨 <strong style="color:var(--text-primary);">Colour-coded icon</strong>
+        — grey when no link is set, blue when a link is saved
+      </div>
+    </div>
+
+    <!-- Release notes link -->
+    <p style="
+      font-size: 11px;
+      text-align: center;
+      margin-bottom: 16px;
+    ">
+      <a href="releases.html"
+         style="color:var(--accent); text-decoration:none;">
+        Full release notes →
+      </a>
+    </p>
+
+    <!-- CTA -->
+    <button onclick="mpCloseWhatsnew()" style="
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+    ">
+      Got it! 🎹
+    </button>
+  </div>
+</div>
+
+<!-- Cookiebanner ModusPractica Pro -->
+<div id="mp-cookie-banner" style="display:none;
+  position:fixed; bottom:0; left:0; right:0;
+  background:#1e293b; color:#e2e8f0;
+  padding:16px 24px;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px; flex-wrap:wrap;
+  font-family:'Inter','Segoe UI',sans-serif;
+  font-size:13px; line-height:1.5;
+  z-index:99999;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.25);">
+  <span style="flex:1; min-width:200px;">
+    🍪 ModusPractica Pro uses Google Analytics
+    to track anonymous usage statistics.
+    No ads, no personal data collected.
+    <a href="https://policies.google.com/privacy"
+       target="_blank"
+       style="color:#60a5fa; text-decoration:none;">
+      Meer info
+    </a>
+  </span>
+  <div style="display:flex; gap:8px;
+              flex-shrink:0;">
+    <button id="btnCookieDeny"
+      style="padding:8px 16px; border-radius:8px;
+             border:1px solid #475569;
+             background:transparent;
+             color:#94a3b8; font-size:13px;
+             font-weight:600; cursor:pointer;">
+      Decline
+    </button>
+    <button id="btnCookieAccept"
+      style="padding:8px 16px; border-radius:8px;
+             border:none;
+             background:#1e6eb5;
+             color:white; font-size:13px;
+             font-weight:600; cursor:pointer;">
+      Accept
+    </button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var choice = localStorage.getItem('mp_ga_consent');
+    if (choice === 'granted') {
+      gtag('consent', 'update', {
+        'analytics_storage':  'granted',
+        'ad_storage':         'denied',
+        'ad_user_data':       'denied',
+        'ad_personalization': 'denied'
+      });
+    } else if (choice === null) {
+      document.getElementById(
+        'mp-cookie-banner'
+      ).style.display = 'flex';
+    }
+  })();
+
+  function mpConsentAccept() {
+    localStorage.setItem('mp_ga_consent', 'granted');
+    gtag('consent', 'update', {
+      'analytics_storage':  'granted',
+      'ad_storage':         'denied',
+      'ad_user_data':       'denied',
+      'ad_personalization': 'denied'
+    });
+    document.getElementById(
+      'mp-cookie-banner'
+    ).style.display = 'none';
+  }
+
+  function mpConsentDeny() {
+    localStorage.setItem('mp_ga_consent', 'denied');
+    document.getElementById(
+      'mp-cookie-banner'
+    ).style.display = 'none';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var acceptBtn = document.getElementById('btnCookieAccept');
+    var denyBtn = document.getElementById('btnCookieDeny');
+    if (acceptBtn) acceptBtn.addEventListener('click', mpConsentAccept);
+    if (denyBtn) denyBtn.addEventListener('click', mpConsentDeny);
+  });
+</script>
+
+  <!-- ══ TOPNAV ══ -->
+  <nav class="dashboard-nav">
+    <a href="dashboard.html" class="dashboard-nav-brand">
+      <img src="BreinLogo.png"
+           class="dashboard-nav-logo"
+           alt="ModusPractica">
+      <span class="dashboard-nav-name">ModusPractica</span>
+    </a>
+    <a href="dashboard.html" class="nav-btn active">
+      🏠 Dashboard
+    </a>
+    <a href="schedule.html" class="nav-btn">
+      📅 Schedule
+    </a>
+    <a href="statistics.html" class="nav-btn">
+      📊 Statistics
+    </a>
+    <a href="settings.html" class="nav-btn">
+      ⚙️ Settings
+    </a>
+    <a href="about.html" class="nav-btn">
+      ℹ️ About
+    </a>
+    <a href="manual.html" class="nav-btn">
+      📖 Manual
+    </a>
+    <a href="practice-session.html?free=true" class="nav-btn nav-btn-free">
+      🎹 Free Practice
+    </a>
+  </nav>
+
+<div class="app-layout">
+
+  <!-- ══ LINKERZIJBALK ══ -->
+  <aside class="sidebar">
+
+    <div class="sidebar-repertoire">
+      <div class="sidebar-section-header">
+        <span class="sidebar-section-title">My Repertoire</span>
+        <button class="sidebar-add-btn" id="btnAddPiece" title="Add new piece">+</button>
+      </div>
+
+      <div class="sort-controls">
+        <select class="sort-select" id="sortSelect">
+          <option value="due">Sort: Due today first</option>
+          <option value="title">Sort: Title A–Z</option>
+          <option value="lastPractice">Sort: Last practiced</option>
+          <option value="created">Sort: Recently added</option>
+        </select>
+      </div>
+
+      <div class="pieces-list" id="piecesList">
+        <!-- Dynamisch gevuld door dashboard.js -->
+      </div>
+      <button class="archive-toggle-btn"
+              id="btnToggleArchive">
+        <span class="archive-toggle-icon">▶</span>
+        <span id="archiveToggleLabel">
+          Show Archived (0)
+        </span>
+      </button>
+      <div id="archivedPiecesList"
+           style="display:none;
+                  border-top: 1px solid var(--border);">
+        <div class="archived-label">Archived Pieces</div>
+        <!-- Dynamisch gevuld door dashboard.js -->
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="streak-stat">
+        <div class="streak-stat-value" id="statCurrentStreak">0</div>
+        <div class="streak-stat-label">Current Streak</div>
+      </div>
+      <div class="streak-stat">
+        <div class="streak-stat-value" id="statMaxStreak">0</div>
+        <div class="streak-stat-label">Personal Record</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ══ HOOFDPANEEL ══ -->
+  <main class="main-panel">
+
+    <div class="main-panel-header">
+      <div class="main-panel-title" id="mainPanelTitle">Practice Today</div>
+      <div class="main-panel-actions" id="mainPanelActions"></div>
+    </div>
+
+    <div class="main-panel-body" id="mainPanelBody">
+
+      <div class="today-section" id="todaySection">
+        <div class="section-header">
+          <span class="section-heading">Due Today</span>
+          <span class="section-count-badge orange" id="dueTodayCount">0</span>
+        </div>
+        <div class="due-list" id="dueList"></div>
+      </div>
+
+      <div id="pieceDetailSection" class="hidden">
+        <div class="section-header">
+          <span class="section-heading" id="pieceDetailHeading">Sections</span>
+          <span class="section-count-badge" id="sectionCount">0</span>
+          <button class="btn btn-primary btn-sm" id="btnAddSection" style="margin-left: auto;">
+            + Add Section
+          </button>
+        </div>
+        <div class="sections-list" id="sectionsList"></div>
+      </div>
+
+      <div id="noPieceSelected" class="empty-state">
+        <div class="empty-state-icon">🎹</div>
+        <div class="empty-state-title">Select a piece</div>
+        <div class="empty-state-text">
+          Choose a piece from your repertoire<br>
+          or add a new one to get started.
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script type="module" src="js/dashboard.js"></script>
+<script src="js/fullscreen.js"></script>
+
+<script>
+  (function () {
+    var seen = localStorage.getItem('mp_welcome_seen_v112');
+    if (!seen) {
+      document.getElementById(
+        'mp-coming-soon-overlay'
+      ).style.display = 'flex';
+    }
+  })();
+
+  function mpCloseWelcome() {
+    localStorage.setItem('mp_welcome_seen_v112', '1');
+    document.getElementById(
+      'mp-coming-soon-overlay'
+    ).style.display = 'none';
+  }
+
+  (function () {
+    var welcomeSeen = localStorage.getItem('mp_welcome_seen_v112');
+    var whatsnewSeen = localStorage.getItem('mp_whatsnew_v119');
+    if (welcomeSeen && !whatsnewSeen) {
+      document.getElementById(
+        'mp-whatsnew-overlay'
+      ).style.display = 'flex';
+    }
+  })();
+
+  function mpCloseWhatsnew() {
+    localStorage.setItem('mp_whatsnew_v119', '1');
+    document.getElementById(
+      'mp-whatsnew-overlay'
+    ).style.display = 'none';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,
+    initial-scale=1.0">
+  <link rel="canonical" href="https://parturamusic.be/ModusPractica_Pro/statistics.html">
+  <title>ModusPractica Pro — Statistics</title>
+  <link rel="icon" type="image/png" href="BreinLogo.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/statistics.css">
+  <!-- Google Consent Mode v2 — standaard alles geweigerd voor EER -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage':         'denied',
+      'ad_user_data':       'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage':  'denied',
+      'region': ['BE','NL','DE','FR','ES','IT',
+                 'PL','SE','DK','FI','NO','AT',
+                 'CH','PT','IE','LU','CZ','SK',
+                 'HU','RO','BG','HR','SI','EE',
+                 'LV','LT','MT','CY','GR'],
+      'wait_for_update': 500
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async
+    src="https://www.googletagmanager.com/gtag/js?id=G-WJ7ZJJF6E5">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJ7ZJJF6E5');
+  </script>
+  <script>
+    (function () {
+      var c = localStorage.getItem('mp_ga_consent');
+      if (c === 'granted') {
+        gtag('consent', 'update', {
+          'analytics_storage':  'granted',
+          'ad_storage':         'denied',
+          'ad_user_data':       'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    })();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+</head>
+<body>
+<div class="stats-page">
+
+  <!-- Navigatie -->
+  <nav class="stats-nav">
+    <a href="dashboard.html" class="stats-nav-brand">
+      <img src="BreinLogo.png" class="stats-nav-logo"
+           alt="ModusPractica">
+      <span class="stats-nav-name">ModusPractica</span>
+    </a>
+    <a href="dashboard.html" class="nav-btn">
+      🏠 Dashboard
+    </a>
+    <a href="schedule.html" class="nav-btn">
+      📅 Schedule
+    </a>
+    <a href="statistics.html" class="nav-btn active">
+      📊 Statistics
+    </a>
+    <a href="settings.html" class="nav-btn">
+      ⚙️ Settings
+    </a>
+    <a href="about.html" class="nav-btn">
+      ℹ️ About
+    </a>
+    <a href="manual.html" class="nav-btn">
+      📖 Manual
+    </a>
+    <a href="practice-session.html?free=true" class="nav-btn nav-btn-free">
+      🎹 Free Practice
+    </a>
+  </nav>
+
+  <div class="stats-content">
+
+    <!-- Range selector -->
+    <div class="range-selector">
+      <span class="range-label">Period:</span>
+      <button class="range-btn active"
+              data-range="week">Week</button>
+      <button class="range-btn"
+              data-range="month">Month</button>
+      <button class="range-btn"
+              data-range="year">Year</button>
+      <button class="range-btn"
+              data-range="alltime">All Time</button>
+    </div>
+
+    <!-- Summary cards -->
+    <div class="summary-cards">
+      <div class="summary-card">
+        <div class="summary-card-value"
+             id="statTotalTime">0m</div>
+        <div class="summary-card-label">
+          Total Practice Time
+        </div>
+        <div class="summary-card-sub"
+             id="statTrainingTime">
+          0m training
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-value"
+             id="statSessions">0</div>
+        <div class="summary-card-label">
+          Sessions
+        </div>
+        <div class="summary-card-sub"
+             id="statSessionsSub">
+          0 training · 0 analysis
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-value"
+             id="statSuccessRate">—</div>
+        <div class="summary-card-label">
+          Success Rate
+        </div>
+        <div class="summary-card-sub">
+          correct / total reps
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-value"
+             id="statFrustration">0</div>
+        <div class="summary-card-label">
+          FrustrationGuard
+        </div>
+        <div class="summary-card-sub">
+          sessions triggered
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-value"
+             id="statYearAverageTime">—</div>
+        <div class="summary-card-label">
+          Year Daily Average
+        </div>
+        <div class="summary-card-sub">
+          since first session this year
+        </div>
+      </div>
+    </div>
+
+    <!-- Oefentijd grafiek -->
+    <div class="chart-panel">
+      <div class="chart-panel-header">
+        <div class="chart-panel-title">
+          Practice Time
+        </div>
+        <div class="chart-legend">
+          <span>
+            <span class="legend-dot"
+                  style="background:var(--accent);">
+            </span>Training
+          </span>
+          <span>
+            <span class="legend-dot"
+                  style="background:var(--accent-2);">
+            </span>Analysis
+          </span>
+          <span>
+            <span class="legend-dot"
+                  style="background:var(--success);">
+            </span>Free Practice
+          </span>
+        </div>
+      </div>
+      <div class="bar-chart-wrapper" id="barChart">
+        <!-- Dynamisch gevuld -->
+      </div>
+    </div>
+
+    <!-- Stabiliteitsoverzicht -->
+    <div class="chart-panel">
+      <div class="chart-panel-header">
+        <div class="chart-panel-title">
+          Stability Distribution
+        </div>
+        <div style="font-size:11px;
+                    color:var(--text-muted);">
+          Active sections by interval
+        </div>
+      </div>
+      <div class="stability-dist">
+        <div class="dist-card">
+          <div class="dist-value"
+               id="dist1to3">0</div>
+          <div class="dist-label">1–3 days</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-value"
+               id="dist4to7">0</div>
+          <div class="dist-label">4–7 days</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-value"
+               id="dist8to30">0</div>
+          <div class="dist-label">8–30 days</div>
+        </div>
+        <div class="dist-card">
+          <div class="dist-value"
+               id="dist30plus">0</div>
+          <div class="dist-label">30+ days</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Oefentijd per stuk -->
+    <div class="pieces-stats-panel">
+      <div class="chart-panel-header">
+        <div class="chart-panel-title">
+          Practice Time per Piece
+        </div>
+      </div>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Piece</th>
+            <th class="right">Total Time</th>
+            <th class="right">Sessions</th>
+            <th class="right">Avg / Session</th>
+          </tr>
+        </thead>
+        <tbody id="piecesStatsBody">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- AI Rapport -->
+    <div class="ai-report-panel">
+      <div class="ai-report-header">
+        <div class="ai-report-title">
+          📊 Intelligent AI Progress Report
+        </div>
+        <button class="btn btn-primary"
+                id="btnGenerateReport"
+                style="background: linear-gradient(
+                  135deg, var(--warning), #fbbf24);
+                  border-color: var(--warning);
+                  color: #000; font-weight: 800;">
+          Generate AI Report
+        </button>
+        <button class="btn btn-secondary"
+                id="btnPrintReport"
+                style="margin-left: 8px;">
+          🖨️ Print Report
+        </button>
+      </div>
+      <div class="ai-report-desc">
+        Let the AI analyse your database for efficiency,
+        retention and tempo trends.
+        Requires a Groq API key in Settings.
+      </div>
+      <div class="ai-spinner-wrapper"
+           id="aiSpinner">
+        <div class="ai-spinner"></div>
+        <span>Analysing your practice data...</span>
+      </div>
+      <div class="ai-report-output"
+           id="aiReportOutput">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="chart-tooltip" id="chartTooltip"></div>
+
+<script type="module" src="js/statistics.js"></script>
+<script src="js/fullscreen.js"></script>
+</body>
+</html>

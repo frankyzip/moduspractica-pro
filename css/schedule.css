@@ -1,0 +1,847 @@
+/* ── Pagina layout ── */
+.schedule-page {
+  min-height: 100vh;
+  background: var(--bg-body);
+}
+
+.schedule-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.schedule-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  margin-right: 8px;
+}
+
+.schedule-nav-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+}
+
+.schedule-nav-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.schedule-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ── Header ── */
+.schedule-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.schedule-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+
+.schedule-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.weeks-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.weeks-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.weeks-btns {
+  display: flex;
+  gap: 4px;
+}
+
+.weeks-btn {
+  width: 36px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.weeks-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.weeks-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ── Summary pills ── */
+.schedule-summary {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.summary-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+
+.summary-pill-value {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.summary-pill.accent {
+  background: var(--accent-light);
+  border-color: rgba(30,110,181,0.2);
+  color: var(--accent);
+}
+
+.summary-pill.accent .summary-pill-value {
+  color: var(--accent);
+}
+
+.summary-pill.orange {
+  background: var(--accent-2-light);
+  border-color: rgba(232,100,10,0.2);
+  color: var(--accent-2);
+}
+
+.summary-pill.orange .summary-pill-value {
+  color: var(--accent-2);
+}
+
+/* ── Kalender ── */
+.schedule-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Week separator ── */
+.week-separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 8px;
+}
+
+.week-separator-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.week-separator-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.week-separator-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ── Dag rij ── */
+.day-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  align-items: start;
+  min-height: 56px;
+}
+
+.day-row.today .day-label-date {
+  color: var(--accent);
+}
+
+.day-row.today .day-label-weekday {
+  color: var(--accent);
+}
+
+.day-row.today .day-label-wrapper {
+  background: var(--accent-light);
+  border-color: rgba(30,110,181,0.2);
+}
+
+.day-row.has-overdue .day-label-wrapper {
+  background: var(--danger-light);
+  border-color: rgba(239,68,68,0.2);
+}
+
+.day-row.has-overdue .day-label-date {
+  color: var(--danger);
+}
+
+.day-label-wrapper {
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  position: sticky;
+  top: 60px;
+}
+
+.day-label-weekday {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.day-label-date {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  line-height: 1.2;
+}
+
+.day-label-month {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.day-label-today-badge {
+  display: none;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+}
+
+.day-row.today .day-label-today-badge {
+  display: block;
+}
+
+/* ── Sectie kaartjes per dag ── */
+.day-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: box-shadow 0.15s, border-color 0.15s;
+  cursor: pointer;
+}
+
+.schedule-item:hover {
+  box-shadow: var(--shadow-sm);
+  border-color: var(--accent);
+}
+
+.schedule-item.overdue {
+  border-left: 3px solid var(--danger);
+  background: rgba(239,68,68,0.02);
+}
+
+.schedule-item.due-today {
+  border-left: 3px solid var(--accent-2);
+}
+
+.schedule-item-piece {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  max-width: 160px;
+}
+
+.schedule-item-section {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.schedule-item-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.schedule-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--surface-3);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.schedule-meta-pill.green {
+  background: var(--success-light);
+  color: var(--success);
+  border-color: rgba(16,185,129,0.2);
+}
+
+.schedule-meta-pill.orange {
+  background: var(--warning-light);
+  color: #92400e;
+  border-color: rgba(245,158,11,0.2);
+}
+
+.schedule-meta-pill.red {
+  background: var(--danger-light);
+  color: var(--danger);
+  border-color: rgba(239,68,68,0.2);
+}
+
+.schedule-item-practice-btn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  opacity: 0;
+}
+
+.schedule-item:hover .schedule-item-practice-btn {
+  opacity: 1;
+}
+
+.schedule-item-practice-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* ── Lege dag ── */
+.day-empty {
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── Lege state ── */
+.schedule-empty {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--text-muted);
+}
+
+.schedule-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.schedule-empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .day-row {
+    grid-template-columns: 90px 1fr;
+    gap: 10px;
+  }
+  .schedule-item-piece { display: none; }
+  .day-label-date { font-size: 16px; }
+}
+
+/* ── View tabs ── */
+.schedule-view-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.view-tab {
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.view-tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.view-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ── Month navigation ── */
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.month-nav-btn {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.month-nav-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.month-nav-today {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ── Month calendar ── */
+.month-view-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.month-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.month-weekdays span {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 4px 0;
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.month-day {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 72px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  text-align: left;
+  font-family: inherit;
+}
+
+.month-day:hover:not(:disabled) {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.month-day.other-month {
+  opacity: 0.35;
+  cursor: default;
+  background: var(--surface-2);
+}
+
+.month-day.today {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(30, 110, 181, 0.15);
+}
+
+.month-day.selected {
+  border-color: var(--accent);
+}
+
+.month-day.selected:not(.status-partial):not(.status-missed):not(.status-pending):not(.intensity-1):not(.intensity-2):not(.intensity-3) {
+  background: var(--accent-light);
+}
+
+.month-day-num {
+  font-size: 15px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.month-day.today .month-day-num {
+  color: var(--accent);
+}
+
+.month-day-practice {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--success);
+  margin-top: 4px;
+  min-height: 14px;
+}
+
+.month-day-sessions {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--warning);
+  margin-top: 2px;
+  min-height: 14px;
+}
+
+.month-day-due {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-2);
+  margin-top: 2px;
+  min-height: 14px;
+}
+
+.month-day.has-overdue-due .month-day-due {
+  color: var(--danger);
+}
+
+/* Dagstatus: volledig / gedeeltelijk / gemist / gepland */
+.month-day.status-partial {
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.38) 0%,
+    rgba(16, 185, 129, 0.38) 49%,
+    rgba(239, 68, 68, 0.32) 51%,
+    rgba(239, 68, 68, 0.32) 100%
+  );
+  border-color: rgba(16, 185, 129, 0.45);
+}
+
+.month-day.status-missed {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.month-day.status-pending {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+.month-day.status-pending .month-day-due {
+  color: #92400e;
+}
+
+.month-day.status-partial .month-day-due,
+.month-day.status-missed .month-day-due {
+  color: var(--danger);
+}
+
+.month-day.status-missed .month-day-practice {
+  color: transparent;
+}
+
+.month-day.selected.status-partial {
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.44) 0%,
+    rgba(16, 185, 129, 0.44) 49%,
+    rgba(239, 68, 68, 0.36) 51%,
+    rgba(239, 68, 68, 0.36) 100%
+  );
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.month-day.selected.status-missed {
+  background: rgba(239, 68, 68, 0.22);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.month-day.selected.status-pending {
+  background: rgba(245, 158, 11, 0.26);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.month-day.selected:not(.status-partial):not(.status-missed):not(.status-pending) {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* Practice intensity (volledig afgeronde dagen) */
+.month-day.intensity-1 {
+  background: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.month-day.intensity-2 {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.month-day.intensity-3 {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.month-day.has-due.status-pending {
+  border-style: solid;
+}
+
+.month-day.has-due:not(.status-pending):not(.status-partial):not(.has-practice) {
+  border-style: dashed;
+}
+
+/* ── Day detail panel ── */
+.day-detail-panel {
+  margin-top: 20px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--accent);
+}
+
+.day-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.day-detail-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.day-detail-close {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.15s;
+}
+
+.day-detail-close:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.day-detail-section + .day-detail-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.day-detail-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.day-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.day-detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.day-detail-item.overdue {
+  border-left: 3px solid var(--danger);
+}
+
+.day-detail-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.day-detail-piece {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.day-detail-section-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.day-detail-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.day-detail-pill {
+  display: inline-flex;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--surface-3);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.day-detail-pill.muted {
+  color: var(--text-muted);
+}
+
+.day-detail-pill.warn {
+  background: var(--danger-light);
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.day-detail-practice-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.day-detail-practice-btn:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .month-day {
+    min-height: 56px;
+    padding: 6px 8px;
+  }
+  .month-day-num { font-size: 13px; }
+  .month-day-practice,
+  .month-day-due { font-size: 9px; }
+}

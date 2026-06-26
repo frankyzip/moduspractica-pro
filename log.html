@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModusPractica — Debug Log</title>
+  <link rel="stylesheet" href="css/base.css">
+  <style>
+    body { padding: 24px; font-family: var(--font-mono, monospace); background: var(--bg-body); color: var(--text-primary); }
+    h1 { font-size: 18px; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
+    .subtitle { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
+    .toolbar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+    .toolbar select, .toolbar input { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-primary); font-size: 12px; font-family: var(--font-mono); }
+    .btn { padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text-secondary); font-size: 12px; font-family: var(--font-mono); font-weight: 600; cursor: pointer; }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-danger { color: var(--danger); border-color: var(--danger-light); }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+    .stat-row { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .stat-pill { padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; background: var(--surface-2); border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    thead th { text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; position: sticky; top: 0; background: var(--bg-body); z-index: 1; }
+    tbody td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; max-width: 400px; word-break: break-word; }
+    tbody tr:hover td { background: var(--surface-2); }
+    .cat-ENGINE  { color: #4f8ef7; font-weight: 700; }
+    .cat-DB      { color: #a78bfa; font-weight: 700; }
+    .cat-UI      { color: #34d399; font-weight: 700; }
+    .cat-NAV     { color: #fbbf24; font-weight: 700; }
+    .cat-ERROR   { color: #f87171; font-weight: 700; }
+    .cat-IMPORT_EXPORT { color: #f59e0b; font-weight: 700; }
+    .data-cell { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); white-space: pre-wrap; }
+    .empty { text-align: center; padding: 48px; color: var(--text-muted); font-size: 13px; }
+    #logCount { font-size: 11px; color: var(--text-muted); margin-left: auto; }
+  </style>
+</head>
+<body>
+  <h1>🪵 ModusPractica Debug Log</h1>
+  <div class="subtitle">Interne log — niet zichtbaar voor eindgebruikers</div>
+
+  <div class="toolbar">
+    <select id="filterCategory">
+      <option value="">Alle categorieën</option>
+      <option value="ENGINE">ENGINE</option>
+      <option value="DB">DB</option>
+      <option value="UI">UI</option>
+      <option value="NAV">NAV</option>
+      <option value="ERROR">ERROR</option>
+      <option value="IMPORT_EXPORT">IMPORT_EXPORT</option>
+    </select>
+    <select id="filterPage">
+      <option value="">Alle pagina's</option>
+      <option value="dashboard.html">dashboard</option>
+      <option value="practice-session.html">practice-session</option>
+      <option value="settings.html">settings</option>
+      <option value="schedule.html">schedule</option>
+      <option value="statistics.html">statistics</option>
+    </select>
+    <input type="text" id="filterSearch" placeholder="Zoek in action / data..." style="width:200px;">
+    <button class="btn" onclick="loadLogs()">🔄 Vernieuwen</button>
+    <button class="btn" onclick="exportLogs()">⬇ Export JSON</button>
+    <button class="btn btn-danger" onclick="clearLogs()">🗑 Wis log</button>
+    <span id="logCount"></span>
+  </div>
+
+  <div class="stat-row" id="statRow"></div>
+  <div id="logTableContainer"></div>
+
+<script type="module">
+  import { getAllLogs, clearAllLogs } from './js/logger.js';
+
+  window.loadLogs = async function() {
+    const all = await getAllLogs();
+    const catFilter  = document.getElementById('filterCategory').value;
+    const pageFilter = document.getElementById('filterPage').value;
+    const search     = document.getElementById('filterSearch').value.toLowerCase();
+
+    const filtered = all.filter(e => {
+      if (catFilter  && e.category !== catFilter) return false;
+      if (pageFilter && e.page !== pageFilter) return false;
+      if (search && !JSON.stringify(e).toLowerCase().includes(search)) return false;
+      return true;
+    }).reverse();
+
+    document.getElementById('logCount').textContent = filtered.length + ' / ' + all.length + ' entries';
+
+    // Statistieken
+    const cats = {};
+    all.forEach(e => { cats[e.category] = (cats[e.category] || 0) + 1; });
+    document.getElementById('statRow').innerHTML = Object.entries(cats)
+      .map(([c, n]) => `<span class="stat-pill cat-${c}">${c}: ${n}</span>`).join('');
+
+    const container = document.getElementById('logTableContainer');
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="empty">Geen log-entries gevonden.</div>';
+      return;
+    }
+
+    container.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tijdstip</th>
+            <th>Pagina</th>
+            <th>Categorie</th>
+            <th>Actie</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map((e, i) => `
+            <tr>
+              <td style="color:var(--text-muted)">${e.id}</td>
+              <td style="white-space:nowrap">${new Date(e.timestamp).toLocaleString('nl-BE')}</td>
+              <td style="color:var(--text-muted)">${e.page}</td>
+              <td class="cat-${e.category}">${e.category}</td>
+              <td>${e.action}</td>
+              <td class="data-cell">${JSON.stringify(e.data, null, 2)}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>`;
+  };
+
+  window.exportLogs = async function() {
+    const all = await getAllLogs();
+    const blob = new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'mp-log-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  window.clearLogs = async function() {
+    if (!confirm('Alle log-entries wissen?')) return;
+    await clearAllLogs();
+    await loadLogs();
+  };
+
+  document.getElementById('filterCategory').addEventListener('change', loadLogs);
+  document.getElementById('filterPage').addEventListener('change', loadLogs);
+  document.getElementById('filterSearch').addEventListener('input', loadLogs);
+
+  loadLogs();
+</script>
+</body>
+</html>

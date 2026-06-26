@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,
+    initial-scale=1.0">
+  <link rel="canonical" href="https://parturamusic.be/ModusPractica_Pro/manual.html">
+  <title>ModusPractica Pro — User Manual</title>
+  <link rel="icon" type="image/png" href="BreinLogo.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/manual.css">
+  <style>
+    .manual-toc-fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      z-index: 999;
+      transition: background 0.15s,
+                  transform 0.15s,
+                  box-shadow 0.15s;
+      line-height: 1;
+    }
+
+    .manual-toc-fab:hover {
+      background: var(--accent-dark);
+      transform: scale(1.08);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.22);
+    }
+
+    @media print {
+      .manual-toc-fab {
+        display: none !important;
+      }
+    }
+  </style>
+  <style>
+    .manual-toc {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .toc-chapter {
+      margin-bottom: 8px;
+    }
+
+    .toc-chapter-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 4px 0;
+    }
+
+    .toc-chapter-link:hover {
+      text-decoration: underline;
+    }
+
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .toc-sections {
+      list-style: none;
+      padding: 0 0 0 32px;
+      margin: 2px 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toc-sections li a {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 1px 0;
+    }
+
+    .toc-sections li a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+  </style>
+  <!-- Google Consent Mode v2 — standaard alles geweigerd voor EER -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'ad_storage':         'denied',
+      'ad_user_data':       'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage':  'denied',
+      'region': ['BE','NL','DE','FR','ES','IT',
+                 'PL','SE','DK','FI','NO','AT',
+                 'CH','PT','IE','LU','CZ','SK',
+                 'HU','RO','BG','HR','SI','EE',
+                 'LV','LT','MT','CY','GR'],
+      'wait_for_update': 500
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async
+    src="https://www.googletagmanager.com/gtag/js?id=G-WJ7ZJJF6E5">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WJ7ZJJF6E5');
+  </script>
+  <script>
+    (function () {
+      var c = localStorage.getItem('mp_ga_consent');
+      if (c === 'granted') {
+        gtag('consent', 'update', {
+          'analytics_storage':  'granted',
+          'ad_storage':         'denied',
+          'ad_user_data':       'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="manual-page">
+
+  <!-- Navigatie -->
+  <nav class="manual-nav">
+    <a href="dashboard.html" class="manual-nav-brand">
+      <img src="BreinLogo.png" class="manual-nav-logo"
+           alt="ModusPractica">
+      <span class="manual-nav-name">ModusPractica</span>
+    </a>
+    <a href="dashboard.html" class="nav-btn">
+      🏠 Dashboard
+    </a>
+    <a href="schedule.html" class="nav-btn">
+      📅 Schedule
+    </a>
+    <a href="statistics.html" class="nav-btn">
+      📊 Statistics
+    </a>
+    <a href="settings.html" class="nav-btn">
+      ⚙️ Settings
+    </a>
+    <a href="about.html" class="nav-btn">
+      ℹ️ About
+    </a>
+    <a href="manual.html" class="nav-btn active">
+      📖 Manual
+    </a>
+    <a href="practice-session.html?free=true" class="nav-btn nav-btn-free">
+      🎹 Free Practice
+    </a>
+  </nav>
+
+  <div class="manual-print-bar screen-only">
+    <span class="manual-print-label">
+      ModusPractica Pro — User Manual
+    </span>
+    <button class="btn btn-primary"
+            onclick="window.print()">
+      🖨️ Print / Save as PDF
+    </button>
+  </div>
+
+  <div class="manual-content">
+
+    <!-- Zwevende inhoudsopgave knop -->
+    <a href="#toc"
+       class="manual-toc-fab screen-only"
+       title="Back to Table of Contents">
+      ☰
+    </a>
+
+    <!-- Inhoudstafel -->
+    <div class="manual-section" id="toc">
+      <h2 class="manual-chapter-title"
+          style="font-size:15px; margin-bottom:16px;">
+        Table of Contents
+      </h2>
+      <nav class="manual-toc">
+
+        <div class="toc-chapter">
+          <a href="#chapter-1" class="toc-chapter-link">
+            <span class="toc-num">1</span>
+            Getting Started
+          </a>
+          <ul class="toc-sections">
+            <li><a href="#chapter-1">Adding your first piece</a></li>
+            <li><a href="#sec-piece-links">Links on pieces</a></li>
+            <li><a href="#chapter-1">Adding a section</a></li>
+            <li><a href="#chapter-1">Starting your first session</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-chapter">
+          <a href="#chapter-2" class="toc-chapter-link">
+            <span class="toc-num">2</span>
+            Core Concepts
+          </a>
+          <ul class="toc-sections">
+            <li><a href="#chapter-2">Piece vs Section</a></li>
+            <li><a href="#chapter-2">Memory Zones</a></li>
+            <li><a href="#chapter-2">Stability</a></li>
+            <li><a href="#chapter-2">Difficulty</a></li>
+            <li><a href="#chapter-2">BPM Progression</a></li>
+            <li><a href="#chapter-2">Due Today</a></li>
+            <li><a href="#sec-model-disclaimer">A model, not a measurement</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-chapter">
+          <a href="#chapter-3" class="toc-chapter-link">
+            <span class="toc-num">3</span>
+            Practice Session
+          </a>
+          <ul class="toc-sections">
+            <li><a href="#chapter-3">Training vs Analysis</a></li>
+            <li><a href="#sec-analysis-phase">When Analysis is available</a></li>
+            <li><a href="#sec-hands-separate">Hands separate, hands together</a></li>
+            <li><a href="#sec-transition-note">Include the transition note</a></li>
+            <li><a href="#chapter-3">The timer</a></li>
+            <li><a href="#chapter-3">Registering attempts</a></li>
+            <li><a href="#chapter-3">FrustrationGuard</a></li>
+            <li><a href="#chapter-3">Energy level</a></li>
+            <li><a href="#chapter-3">Entry Cost</a></li>
+            <li><a href="#chapter-3">Notes</a></li>
+            <li><a href="#chapter-3">Completing a session</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-chapter">
+          <a href="#chapter-4" class="toc-chapter-link">
+            <span class="toc-num">4</span>
+            Dashboard
+          </a>
+          <ul class="toc-sections">
+            <li><a href="#sec-piece-links">Links on pieces</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-chapter">
+          <a href="#chapter-5" class="toc-chapter-link">
+            <span class="toc-num">5</span>
+            Schedule
+          </a>
+        </div>
+
+        <div class="toc-chapter">
+          <a href="#chapter-6" class="toc-chapter-link">
+            <span class="toc-num">6</span>
+            Statistics
+          </a>
+          <ul class="toc-sections">
+            <li><a href="#chapter-6">Summary cards</a></li>
+            <li><a href="#chapter-6">Practice Time chart</a></li>
+            <li><a href="#chapter-6">Stability Distribution</a></li>
+            <li><a href="#chapter-6">Practice Time per Piece</a></li>
+            <li><a href="#chapter-6">Print Report</a></li>
+            <li><a href="#chapter-6">AI Progress Report</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-chapter">
+          <a href="#chapter-7" class="toc-chapter-link">
+            <span class="toc-num">7</span>
+            Settings
+          </a>
+          <ul class="toc-sections">
+            <li><a href="#chapter-7">Backup &amp; Restore</a></li>
+            <li><a href="#chapter-7">Groq API Key</a></li>
+            <li><a href="#chapter-7">Reset App</a></li>
+            <li><a href="#chapter-7">Your Browser, Your Data</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-chapter">
+          <a href="#chapter-8" class="toc-chapter-link">
+            <span class="toc-num">8</span>
+            Tips for Music Teachers
+          </a>
+          <ul class="toc-sections">
+            <li><a href="#chapter-8">Keep sections small</a></li>
+            <li><a href="#chapter-8">Set realistic BPM targets</a></li>
+            <li><a href="#chapter-8">Use Analysis mode first</a></li>
+            <li><a href="#chapter-8">Explain the Memory Zones to students</a></li>
+            <li><a href="#chapter-8">Respect the FrustrationGuard</a></li>
+            <li><a href="#chapter-8">Check Statistics together</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-chapter">
+          <a href="#chapter-9" class="toc-chapter-link">
+            <span class="toc-num">9</span>
+            Practice Tips
+          </a>
+          <ul class="toc-sections">
+            <li><a href="#chapter-9">Take a short rest between repetitions</a></li>
+            <li><a href="#chapter-9">Practice in the evening, sleep, improve in the morning</a></li>
+          </ul>
+        </div>
+
+      </nav>
+    </div>
+
+    <!-- Chapter 1 -->
+    <div class="manual-section" id="chapter-1">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">1</span>
+        Getting Started
+      </h2>
+
+      <p class="manual-prose">
+        ModusPractica Pro is an intelligent practice planner
+        for musicians. Instead of repeating passages until
+        they feel right, the app aims to provide the best
+        possible plan for what to practice and when — based
+        on how your brain actually consolidates motor skills.
+      </p>
+
+      <div class="manual-warning">
+        ⚠️ <strong>This app only works if you are
+        honest with yourself.</strong> The scheduling
+        algorithm relies entirely on the accuracy of
+        your self-assessment — whether you mark a
+        repetition as correct or failed, and how you
+        rate your personal feeling at the end of a
+        session. An inflated score feels good in the
+        moment but produces an unreliable schedule
+        and slows down your actual progress.
+        Honest feedback, even when unflattering,
+        is the foundation of effective practice.
+      </div>
+
+      <div class="manual-warning">
+        ⚠️ <strong>Browser compatibility:</strong>
+        ModusPractica Pro works fully in
+        <strong>Google Chrome</strong> and
+        <strong>Microsoft Edge</strong>. In
+        <strong>Brave</strong>, you need to disable
+        Shields for parturamusic.be — click the shield
+        icon in the address bar and turn off the
+        "Shields up for this site" toggle. Without
+        this setting, Brave may delete your local data
+        when you close the browser.
+        <strong>Firefox has not been tested.</strong>
+      </div>
+
+      <h3 class="manual-section-heading">
+        Adding your first piece
+      </h3>
+      <p class="manual-prose">
+        Click the <strong>+</strong> button in the sidebar
+        next to "My Repertoire". Enter the title and
+        optionally the composer name.
+      </p>
+
+      <h3 class="manual-section-heading" id="sec-piece-links">
+        Links on pieces
+      </h3>
+      <p class="manual-prose">
+        You can attach an external link to any piece —
+        for example a score on IMSLP, a YouTube
+        performance, or a file on Google Drive. The
+        URL is stored with the piece but is
+        <strong>never shown as text</strong> in the
+        app; you recognise linked pieces by a small
+        link icon instead.
+      </p>
+      <p class="manual-prose">
+        Open a piece in the Dashboard and click the
+        <strong>link button</strong> in the action bar
+        (grey when no link is set, blue when a link is
+        saved). Enter or paste the URL and confirm.
+        You can add a link to an existing piece at any
+        time, change it when you find a better source,
+        or clear the field and save to remove the link.
+      </p>
+      <p class="manual-prose">
+        When a link is saved, a blue link icon appears
+        next to the piece title in the repertoire
+        sidebar. Click that icon to open the link in a
+        new browser tab without leaving ModusPractica
+        Pro. Click anywhere else on the row to select
+        the piece as usual.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Adding a section
+      </h3>
+      <p class="manual-prose">
+        Select your piece, then click
+        <strong>+ Add Section</strong>. A section is
+        any fragment of music you want to practice in
+        isolation — it can be as small as half a bar
+        or as large as you find manageable. There are
+        no rules about size: let your own experience
+        and the difficulty of the passage guide you.
+        Give it a name — this can be anything that
+        helps you identify it: bar numbers, letter
+        names, descriptive text, or any combination
+        (e.g. "bars 1–4", "A-section", "maat 3 slag
+        3–4", "left hand only intro"). Then set a
+        starting BPM and a target BPM.
+      </p>
+
+      <div class="manual-tip">
+        💡 <strong>Always include at least one beat
+        of the following bar</strong> when defining
+        a section. The transition into the next
+        passage is one of the most demanding moments
+        in motor memory — practicing the connection
+        directly trains the brain to navigate it
+        automatically.
+        See <a href="#sec-transition-note">Chapter 3 —
+        Include the transition note</a> for the
+        full explanation.
+      </div>
+
+      <div class="manual-tip">
+        💡 Keep sections as small as makes sense for the
+        passage. Some difficult passages benefit from
+        sections as short as half a bar. The smaller and
+        more focused the section, the more precisely the
+        app can track and schedule your practice. You can
+        always merge or re-divide sections as your playing
+        develops.
+      </div>
+
+      <h3 class="manual-section-heading">
+        Time tracking only (sight reading &amp; warm-ups)
+      </h3>
+      <p class="manual-prose">
+        Some material does not belong in the spaced
+        repetition schedule — sight reading, warm-ups,
+        or exploratory reading through new scores. Open
+        the piece in the Dashboard and enable
+        <strong>Time tracking only</strong>. The piece
+        stays in your repertoire and sessions count
+        toward Statistics, but its sections never appear
+        under <strong>Due Today</strong> or on the
+        Schedule. Practice opens in Analysis mode
+        automatically; the training counter and
+        scheduling algorithm are not used.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Starting your first session
+      </h3>
+      <p class="manual-prose">
+        Sections that are due appear under
+        <strong>Due Today</strong> on the dashboard.
+        Click <strong>Practice</strong> to open the
+        session page.
+      </p>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="manual-section" id="chapter-2">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">2</span>
+        Core Concepts
+      </h2>
+
+      <h3 class="manual-section-heading">
+        Piece vs Section
+      </h3>
+      <p class="manual-prose">
+        A <strong>piece</strong> is a complete work
+        (e.g. <em>Elegy</em> by Reinecke). A
+        <strong>section</strong> is any fragment of that
+        piece that you choose to practice in isolation.
+        You decide entirely how to divide your pieces —
+        there is no prescribed number of sections or
+        minimum size. Some musicians work with two or
+        three large sections per piece; others divide
+        every difficult bar into its own section.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Memory Zones
+      </h3>
+      <p class="manual-prose">
+        Every section moves through three stages.
+        <strong>Exploration</strong> means you are in
+        the first two days of learning — the material is
+        new and fragile. <strong>Consolidation</strong>
+        means the section is in the spaced repetition
+        cycle — the app spaces your practice to build
+        long-term retention. <strong>Mastery</strong>
+        means the section is fully consolidated into
+        long-term memory.
+      </p>
+
+      <h3 class="manual-section-heading">Stability</h3>
+      <p class="manual-prose">
+        A number that represents how many days your
+        memory of this section will last. A stability
+        of 5 means the app will schedule the next
+        practice in approximately 5 days. The better
+        you perform, the faster stability grows.
+      </p>
+
+      <h3 class="manual-section-heading">Difficulty</h3>
+      <p class="manual-prose">
+        A score from 0 to 1 that reflects how hard this
+        section is for you personally. It adjusts
+        automatically based on your performance.
+        A high difficulty slows down stability growth.
+      </p>
+
+      <h3 class="manual-section-heading">
+        BPM Progression
+      </h3>
+      <p class="manual-prose">
+        You set a target tempo for each section.
+        The app gradually increases your practice tempo
+        as your performance improves — you never need
+        to adjust the metronome manually.
+      </p>
+
+      <h3 class="manual-section-heading">Due Today</h3>
+      <p class="manual-prose">
+        The app calculates the optimal moment for each
+        repetition.         Sections appear under
+        <strong>Due Today</strong> when their scheduled
+        date has arrived. Practicing earlier or later
+        than scheduled reduces the efficiency of
+        the spacing.
+      </p>
+
+      <h3 class="manual-section-heading" id="sec-model-disclaimer">
+        A model, not a measurement
+      </h3>
+      <p class="manual-prose">
+        The stability and difficulty values are
+        mathematical approximations — a model of how
+        motor memory behaves, not a direct measurement
+        of what happens in your brain. No algorithm
+        can measure the exact state of a synapse.
+        The underlying principles — spaced repetition,
+        rest, correct execution — are well supported
+        by motor learning research. The specific
+        numbers the app calculates are a structured,
+        evidence-informed estimate. They are useful
+        precisely because they are consistent and
+        honest about what they are.
+      </p>
+      <p class="manual-prose">
+        This is why your own honest self-assessment
+        remains the most important input the app
+        receives. The model is only as good as the
+        data you give it.
+      </p>
+      <div class="manual-tip">
+        💡 The warning in Chapter 1 — <em>"This app
+        only works if you are honest with yourself"</em>
+        — is not a formality. It is the single most
+        important sentence in this manual.
+      </div>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="manual-section" id="chapter-3">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">3</span>
+        Practice Session
+      </h2>
+
+      <h3 class="manual-section-heading">
+        Training vs Analysis
+      </h3>
+      <p class="manual-prose">
+        A <strong>training session</strong> registers
+        correct and failed attempts and updates the
+        scheduling algorithm. An
+        <strong>analysis session</strong> (🔍) is for
+        free, untracked exploration — use it to discover
+        fingerings, decide how to divide a piece into
+        sections, explore phrasing, or simply read
+        through new material without any performance
+        pressure.         It is the natural starting point
+        before you begin structured training on a
+        new passage.
+      </p>
+
+      <h3 class="manual-section-heading" id="sec-analysis-phase">
+        When Analysis is available
+      </h3>
+      <p class="manual-prose">
+        Analysis is intended for the <strong>Exploration</strong>
+        phase only — while a section is still new and
+        <code>initialDaysDone</code> is below 3. Once the
+        section enters <strong>Consolidation</strong>, the
+        🔍 Analysis button is disabled (with a tooltip
+        explaining why). From that point on, register all
+        attempts with the training counter so the
+        scheduling algorithm receives honest performance
+        data.
+      </p>
+      <p class="manual-prose">
+        This prevents using analysis as hidden rehearsal
+        on material you already know — which would inflate
+        success rates and entry cost on the next training
+        session. The standalone
+        <strong>🎹 Free Practice</strong> button in the
+        navigation bar remains available for unstructured
+        playing that is not tied to a scheduled section.
+      </p>
+      <p class="manual-prose">
+        If you finish an analysis session and choose
+        <strong>Start Training Now</strong>, the app asks
+        you to confirm — a reminder that practice during
+        analysis may make your first counted attempts
+        look easier than a true cold start.
+      </p>
+      <div class="manual-tip">
+        💡 Use analysis to <em>orient</em> yourself
+        (structure, fingering, phrasing) — not to drill
+        the passage until it feels easy. Save measurable
+        repetition for training mode.
+      </div>
+
+      <h3 class="manual-section-heading" id="sec-hands-separate">
+        Hands separate, hands together
+      </h3>
+      <p class="manual-prose">
+        When learning a new passage on a keyboard
+        instrument, it is tempting to combine both
+        hands as quickly as possible. Research on
+        motor learning shows this is counterproductive:
+        bimanual coordination is a cognitively and
+        motorically distinct task from single-hand
+        execution, and it requires its own acquisition
+        phase before it can consolidate effectively
+        (Bangert et al., 2006; Watanabe et al., 2002).
+      </p>
+      <p class="manual-prose">
+        The recommended workflow in ModusPractica Pro
+        is the following.
+      </p>
+      <p class="manual-prose">
+        First, register the right hand and left hand
+        as <strong>separate sections</strong> and use
+        the <strong>training counter</strong> for both.
+        Each hand executes a single, well-defined motor
+        sequence that can be repeated correctly and
+        counted accurately. The algorithm receives
+        meaningful input and schedules each hand
+        independently according to its own stability
+        and difficulty.
+      </p>
+      <p class="manual-prose">
+        Once both hands are stable individually, begin
+        combining them. At this stage — and for as long
+        as correct full repetitions cannot be reliably
+        executed — use the <strong>Analysis mode</strong>
+        (🔍) rather than the training counter. The
+        counter should only register attempts that you
+        can genuinely judge as correct or failed. If
+        you are working through one bar at a time with
+        both hands and the counter would remain at zero,
+        that is a clear signal that you are still in
+        the exploration phase, not the training phase.
+        Saving a session with zero correct repetitions
+        gives the algorithm incorrect input and
+        produces an unreliable schedule.
+      </p>
+      <p class="manual-prose">
+        When both hands together feel stable enough
+        to produce correct, controlled repetitions,
+        create a <strong>new section</strong> — for
+        example "Bars 1–4 both hands" — and start
+        the training counter from that point. This
+        section will then follow its own independent
+        spaced repetition schedule.
+      </p>
+      <div class="manual-tip">
+        💡 <strong>Practical summary:</strong>
+        hands separate → training counter.
+        Hands together (still exploring) → Analysis mode.
+        Hands together (stable, countable) → new section
+        with training counter.
+      </div>
+
+      <h3 class="manual-section-heading"
+          id="sec-transition-note">
+        Include the transition note
+      </h3>
+      <p class="manual-prose">
+        When practising any section, always include
+        at least the first note — or ideally the
+        first beat — of the following section. This
+        is not optional detail: it is the most
+        demanding moment in motor memory.
+      </p>
+      <p class="manual-prose">
+        A motor sequence is stored in the brain not
+        only as a series of movements but also as a
+        chain of cues: each movement contains an
+        anticipation of what follows. When you stop
+        practising at the last note of your section,
+        the brain learns a <em>termination</em> at
+        that point — not a transition. The result is
+        the familiar hesitation or tempo drop that
+        appears exactly at the boundary between two
+        sections when they are later combined
+        (Rosenbaum, 2010; Gabrielsson, 1999).
+      </p>
+      <p class="manual-prose">
+        By including the first note of the next
+        section in every repetition, you programme
+        the transition directly into the motor
+        memory of the current section. When you
+        later combine the two sections into a larger
+        unit and begin its own acquisition phase,
+        the transition is already partially
+        consolidated — which is why chained sections
+        typically stabilise faster than sections
+        learned in complete isolation.
+      </p>
+      <div class="manual-tip">
+        💡 This practice does not change how you
+        register the session in the app. Your section
+        boundaries remain as defined. The overlap
+        note is a physical habit during repetition,
+        not a parameter you set.
+      </div>
+
+      <h3 class="manual-section-heading">The timer</h3>
+      <p class="manual-prose">
+        The timer measures the total duration of your
+        session for statistical purposes only. It has
+        no effect on your score or scheduling.
+        There is deliberately no time pressure anywhere
+        in this app. Practicing under time pressure
+        raises cortisol levels and disrupts the motor
+        consolidation processes that make practice
+        effective. Take all the time you need between
+        repetitions. Slow, conscious, and correct is
+        always more valuable than fast and approximate.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Registering attempts
+      </h3>
+      <p class="manual-prose">
+        Use the <strong>+</strong> and
+        <strong>−</strong> buttons to register correct
+        repetitions and failed attempts. A failed attempt
+        is any execution you judge as incorrect. A correct
+        repetition is a clean, controlled execution at
+        the current tempo.
+        When beginning a new section, always start at a
+        very slow tempo — well below what feels necessary.
+        Motor memory is built through correct repetition,
+        not through speed. A single slow, perfectly
+        controlled execution does more for long-term
+        retention than ten rushed approximations.
+        Speed follows naturally once the motor pattern
+        is consolidated.
+      </p>
+
+      <h3 class="manual-section-heading">
+        FrustrationGuard
+      </h3>
+      <p class="manual-prose">
+        When frustration builds during practice, errors
+        stop consolidating as useful feedback and begin
+        encoding incorrect motor patterns. FrustrationGuard
+        monitors your <strong>Total Error Burden</strong> —
+        the sum of failed attempts and streak resets —
+        and intervenes before that threshold is crossed.
+      </p>
+      <p class="manual-prose">
+        A <strong>failed attempt</strong> is any execution
+        you judge as incorrect. A <strong>streak reset</strong>
+        occurs in Strict Gebrian mode when you fail after
+        building up several correct repetitions in a row:
+        the streak counter returns to zero and your session
+        target increases. That reset is counted toward the
+        same burden as a failed attempt, because
+        neurologically it is equally disruptive — it breaks
+        the formation of a stable motor pathway just when
+        it was taking shape.
+      </p>
+      <p class="manual-prose">
+        At <strong>5 Total Error Burden</strong>, a warning
+        banner appears. Consider lowering your tempo,
+        reducing the section size, or taking a short
+        break. At <strong>8</strong>, the session stops
+        automatically. This is not a punishment — frustrated
+        practice encodes errors into muscle memory. The
+        section is rescheduled for the next day so you
+        return to it after a night of sleep-based
+        consolidation.
+      </p>
+      <p class="manual-prose">
+        When FrustrationGuard triggers, you have two
+        constructive paths forward: <strong>lower the
+        tempo</strong>, or <strong>make the section
+        smaller</strong> by dividing the passage into
+        shorter fragments. For complex motor patterns,
+        fragmentation is often more effective than tempo
+        alone — a shorter passage reduces working-memory
+        load and makes correct repetition reachable.
+        If the guard keeps triggering, archive the section
+        and add smaller fragments rather than pushing
+        through at the same size and speed.
+      </p>
+
+      <div class="manual-warning">
+        ⚠️ When FrustrationGuard triggers, do not
+        override it. Use the remaining time for
+        analysis or work on a different piece.
+        Return to the section the next day — or
+        lower the tempo, divide it into smaller
+        fragments, or both.
+      </div>
+
+      <h3 class="manual-section-heading">
+        Energy level
+      </h3>
+      <p class="manual-prose">
+        Set your energy level before practicing.
+        A low energy level reduces the penalty for
+        failed attempts — the app recognises that
+        fatigue is physiological, not a reflection
+        of your motor skill.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Entry Cost
+      </h3>
+      <p class="manual-prose">
+        The number of failed attempts before your
+        first correct repetition. A decreasing entry
+        cost across sessions is one of the clearest
+        signs that a motor skill is genuinely
+        consolidating in long-term memory.
+      </p>
+
+      <h3 class="manual-section-heading">Notes</h3>
+      <p class="manual-prose">
+        Use the notes field to record observations —
+        fingering decisions, problem spots, tempo
+        remarks. The most recent note is shown at
+        the top of the next session.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Completing a session
+      </h3>
+      <p class="manual-prose">
+        Click <strong>Complete Session</strong> when
+        you are done. You will be asked to confirm
+        the outcome and to rate your personal feeling
+        about the session: <strong>Poor</strong>,
+        <strong>Fair</strong>, <strong>Good</strong>,
+        or <strong>Excellent</strong>.
+        This self-assessment is not cosmetic — it feeds
+        directly into the scheduling algorithm. Your
+        subjective experience of a session often captures
+        information that the raw numbers do not: tension,
+        hesitation, lack of focus, or conversely a
+        feeling of real flow. The algorithm combines
+        both objective performance data and your personal
+        rating to calculate the optimal next practice
+        date.
+      </p>
+      <p class="manual-prose">
+        The app schedules one training session per
+        section per calendar day. If you wish to
+        practice the same section again later that
+        day, you are free to do so — the session will
+        be recorded in your statistics. The scheduling
+        algorithm will not update a second time on the
+        same day: your next practice date remains the
+        one calculated after the first session.
+      </p>
+
+      <div class="manual-tip">
+        💡 <strong>Excellent is intentionally
+        unavailable until you have reached the
+        target BPM for this section.</strong>
+        This is a deliberate design choice: the
+        highest rating is only meaningful when the
+        section is genuinely performable at its
+        intended tempo. When Excellent becomes
+        available, it is a genuine milestone —
+        not just a feeling.
+      </div>
+    </div>
+
+    <!-- Chapter 4 -->
+    <div class="manual-section" id="chapter-4">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">4</span>
+        Dashboard
+      </h2>
+
+      <p class="manual-prose">
+        The dashboard is your daily starting point.
+        <strong>Due Today</strong> shows all sections
+        scheduled for today. Click a section to go
+        directly to the practice session.
+      </p>
+      <p class="manual-prose">
+        The sections in Due Today are ordered by priority:
+        the most overdue section appears first, followed by
+        sections due today. Within the same due date,
+        sections with lower stability — those most at risk
+        of being forgotten — are listed before more stable
+        ones. This ordering is automatic and reflects the
+        algorithm's assessment of what needs your attention
+        most urgently. You do not need to reorder the list
+        manually.
+      </p>
+      <p class="manual-prose">
+        Your repertoire is listed in the sidebar.
+        Click a piece to see its sections and their
+        current status. Use the sort menu to order
+        by due date, title, last practiced, or
+        recently added.
+      </p>
+      <p class="manual-prose">
+        Pieces with an external link show a blue link
+        icon beside the title in the sidebar — see
+        <a href="#sec-piece-links">Links on pieces</a>
+        in Chapter 1 for how to add, edit, or remove
+        a link from the piece detail view.
+      </p>
+      <p class="manual-prose">
+        Sections and pieces can be archived when no
+        longer actively studied. Archived items are
+        hidden from Due Today but their full practice
+        history is preserved and remains visible in
+        Statistics. Sections can also be permanently
+        deleted directly from the piece detail view —
+        both active and archived sections have a delete
+        button right where you see them, so you never
+        need to archive a section first just to remove
+        it. Deleting a section removes it from your
+        repertoire but retains all recorded session data,
+        so your practice time and history are never
+        lost even when you clean up your repertoire.
+      </p>
+      <p class="manual-prose">
+        The streak counter at the bottom of the
+        sidebar shows your current consecutive
+        practice days and your personal record.
+      </p>
+    </div>
+
+    <!-- Chapter 5 -->
+    <div class="manual-section" id="chapter-5">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">5</span>
+        Schedule
+      </h2>
+
+      <p class="manual-prose">
+        The Schedule page shows a calendar view of
+        all upcoming practice sessions. Use the week
+        selector to look 1, 2, 4 or 8 weeks ahead.
+        Each day shows which sections are due.
+        This helps you plan practice time and spot
+        overloaded days in advance.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Month overview
+      </h3>
+      <p class="manual-prose">
+        Switch to the <strong>Month</strong> tab for
+        an informational calendar of the current
+        month. Past days: fully green means all planned
+        sections for that day were completed; a diagonal
+        green/red split means you practiced but left some
+        sections undone; fully red means nothing was
+        practiced while sections were due. Orange text
+        shows the session count. Future planned days
+        appear in yellow. Click a day for completed
+        sessions and missed sections. Overdue sections
+        appear on today. Past planning is reconstructed
+        from your session history.
+      </p>
+    </div>
+
+    <!-- Chapter 6 -->
+    <div class="manual-section" id="chapter-6">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">6</span>
+        Statistics
+      </h2>
+
+      <h3 class="manual-section-heading">
+        Summary cards
+      </h3>
+
+      <div class="manual-def-list">
+        <div class="manual-def-item">
+          <div class="manual-def-term">Total Practice Time</div>
+          <div class="manual-def-body">
+            The sum of all session durations in the
+            selected period, split into training and
+            analysis time.
+          </div>
+        </div>
+        <div class="manual-def-item">
+          <div class="manual-def-term">Sessions</div>
+          <div class="manual-def-body">
+            Total number of sessions in the selected
+            period, split by type.
+          </div>
+        </div>
+        <div class="manual-def-item">
+          <div class="manual-def-term">Success Rate</div>
+          <div class="manual-def-body">
+            The percentage of correct repetitions out
+            of total attempts across all training sessions.
+          </div>
+        </div>
+        <div class="manual-def-item">
+          <div class="manual-def-term">FrustrationGuard</div>
+          <div class="manual-def-body">
+            How many times the guard was triggered because
+            Total Error Burden (failed attempts plus streak
+            resets) reached the hard limit of 8. A high
+            number suggests sections may be too large or
+            too fast — try smaller fragments or a lower
+            tempo.
+          </div>
+        </div>
+        <div class="manual-def-item">
+          <div class="manual-def-term">Year Daily Average</div>
+          <div class="manual-def-body">
+            Your average daily practice time in the current
+            calendar year, counted from the first session of
+            the year through today.
+          </div>
+        </div>
+      </div>
+
+      <h3 class="manual-section-heading">
+        Practice Time chart
+      </h3>
+      <p class="manual-prose">
+        A bar chart of daily practice time with three
+        stacked segments: <strong>training</strong> (blue),
+        <strong>analysis</strong> (orange), and
+        <strong>Free Practice</strong> (green). Hover a
+        bar to see the day <strong>total</strong> first,
+        then the breakdown. Free Practice is shown in the
+        tooltip only on days where you logged that type
+        of session.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Stability Distribution
+      </h3>
+      <p class="manual-prose">
+        Shows how many active sections are in each
+        stability bracket — a quick overview of where
+        your repertoire stands in the learning curve.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Practice Time per Piece
+      </h3>
+      <p class="manual-prose">
+        A breakdown of total time, session count and
+        average session length per piece.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Print Report
+      </h3>
+      <p class="manual-prose">
+        You can print or save a static practice report
+        at any time without an AI key. This report
+        displays your raw statistical data — sessions,
+        practice time, stability and performance — in
+        a clean printable format that you can analyse
+        yourself or share with a teacher. Use the
+        <strong>🖨️ Print Report</strong> button in
+        the Statistics page to generate it.
+      </p>
+
+      <h3 class="manual-section-heading">
+        AI Progress Report
+      </h3>
+      <p class="manual-prose">
+        The AI Progress Report analyses your complete
+        practice database and generates a written
+        report covering consistency, tempo trends,
+        sections that need attention, and three
+        concrete action points. The AI does not
+        replace the statistics — it reads and
+        interprets them, providing context and
+        advice that the numbers alone cannot give.
+      </p>
+      <p class="manual-prose">
+        The report requires a personal
+        <strong>Groq API key</strong>, configured
+        in Settings. Groq was chosen specifically
+        because it uses a
+        <strong>pay-per-use model</strong> — you
+        only pay for what you actually use, and the
+        cost per report is extremely small (typically
+        a fraction of a cent). You can monitor your
+        exact usage and costs at any time on the
+        <a href="https://console.groq.com"
+           target="_blank" rel="noopener">
+          Groq console (console.groq.com)
+        </a>.
+      </p>
+      <p class="manual-prose">
+        The AI feature is entirely optional.
+        ModusPractica Pro is fully functional without
+        it — the report is a valuable addition for
+        users who want a deeper interpretation of
+        their data, but it is never required for
+        normal use.
+      </p>
+
+      <div class="manual-tip">
+        💡 <strong>How to get a Groq API key:</strong>
+        Go to
+        <a href="https://console.groq.com"
+           target="_blank" rel="noopener">
+          console.groq.com
+        </a>
+        and create a free account. Once logged in,
+        navigate to <strong>API Keys</strong> in the
+        left menu and click
+        <strong>Create API Key</strong>. Copy the key
+        (it starts with <code>gsk_</code>) and paste
+        it into the Groq API Key field in
+        ModusPractica Pro Settings. Your key is stored
+        only in your browser's session memory and is
+        automatically cleared when you close the
+        browser — it is never sent to any server other
+        than Groq's own API.
+      </div>
+    </div>
+
+    <!-- Chapter 7 -->
+    <div class="manual-section" id="chapter-7">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">7</span>
+        Settings
+      </h2>
+
+      <h3 class="manual-section-heading">
+        Backup &amp; Restore
+      </h3>
+      <p class="manual-prose">
+        Export all your data as a JSON file at any
+        time. This file can be reimported to restore
+        your data or transfer it to another device.
+      </p>
+
+      <div class="manual-warning">
+        ⚠️ Data is stored locally in your browser
+        and is not backed up automatically.
+        Export regularly to avoid data loss.
+      </div>
+
+      <h3 class="manual-section-heading">
+        Groq API Key
+      </h3>
+      <p class="manual-prose">
+        Enter your personal Groq API key to enable
+        the AI Progress Report in Statistics. Groq
+        uses a pay-per-use pricing model — the cost
+        per report is extremely small and you only
+        pay for what you use. Monitor your usage at
+        <a href="https://console.groq.com"
+           target="_blank" rel="noopener">
+          console.groq.com
+        </a>.
+        Your key is stored in session memory only and
+        is cleared automatically when you close the
+        browser. It is never stored permanently or
+        transmitted to any server other than Groq.
+      </p>
+
+      <div class="manual-tip">
+        💡 In a future version of ModusPractica Pro,
+        an option will be available to store your
+        API key permanently in the browser on your
+        own trusted machine. For now, the key is
+        cleared on every browser close as a
+        deliberate security measure — your key is
+        never stored in a database or transmitted
+        to any server other than Groq's own API.
+      </div>
+
+      <h3 class="manual-section-heading">Reset App</h3>
+      <p class="manual-prose">
+        Permanently deletes all data. Always export
+        a backup before using this option.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Your Browser, Your Data
+      </h3>
+
+      <p class="manual-prose">
+        ModusPractica Pro stores all data locally
+        in your browser using IndexedDB. There is
+        no cloud server, no account, and no
+        synchronisation. This is a deliberate
+        choice that keeps your data private and
+        under your full control — but it comes
+        with one important consequence:
+        <strong>your data lives in the browser
+        you use.</strong>
+      </p>
+
+      <p class="manual-prose">
+        Choose one browser and use it consistently
+        for all your practice sessions. If you
+        switch to a different browser on the same
+        machine, or move to a different device,
+        your data will not be there — unless you
+        explicitly transfer it via an export file.
+      </p>
+
+      <p class="manual-prose">
+        To move your data to another browser or
+        device: export a backup in Settings, then
+        open ModusPractica Pro in the new browser
+        or device and import that file. Once you
+        have verified the import, use
+        <strong>Danger Zone → Reset App</strong>
+        on the old browser to remove the duplicate.
+      </p>
+
+      <p class="manual-prose">
+        You can store your exported backup file in
+        your own cloud storage (Google Drive,
+        iCloud, Dropbox, or any service you trust)
+        so that it is accessible from anywhere.
+        This gives you the flexibility of working
+        across machines while keeping full control
+        of your data.
+      </p>
+
+      <div class="manual-warning">
+        ⚠️ <strong>Back up after every practice
+        session.</strong> Because all data is stored
+        locally in your browser, it cannot be backed
+        up automatically — browser security
+        restrictions prevent any app from writing
+        files to your disk without your explicit
+        action. If your browser data is cleared,
+        the device fails, or you accidentally reset
+        the app, any sessions since your last export
+        will be lost permanently. The export takes
+        only a few seconds. Make it a habit.
+      </div>
+
+      <div class="manual-warning">
+        ⚠️ <strong>Brave users:</strong> Brave's
+        strict privacy policy can delete local browser
+        data on close, even for apps that use only
+        anonymous, privacy-respecting analytics.
+        To prevent this: click the shield icon (🛡️)
+        in the address bar while on parturamusic.be,
+        open "Advanced controls" and turn the
+        <strong>"Shields up for this site"</strong>
+        toggle <strong>off</strong>. This is a
+        one-time setting — Brave remembers it per
+        site. ModusPractica Pro uses Google Analytics
+        with Consent Mode v2 for anonymous usage
+        statistics only — no advertising, no personal
+        data. Disabling Shields has no disadvantage
+        for this site.
+        <strong>Firefox has not been tested —
+        Chrome or Edge are recommended.</strong>
+      </div>
+    </div>
+
+    <!-- Chapter 8 -->
+    <div class="manual-section" id="chapter-8">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">8</span>
+        Tips for Music Teachers
+      </h2>
+
+      <p class="manual-prose">
+        ModusPractica Pro is well suited for use in
+        a teaching context. Here are some practical
+        guidelines.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Keep sections small
+      </h3>
+      <p class="manual-prose">
+        Smaller sections allow more precise tracking
+        and more targeted repetition. Do not feel
+        constrained by bar boundaries — a difficult
+        section can be as short as half a bar or even
+        a single beat. The more focused the section,
+        the more efficiently the app can schedule and
+        track it. You can always expand or re-divide
+        sections as your playing develops.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Set realistic BPM targets
+      </h3>
+      <p class="manual-prose">
+        The target BPM should be the final performance
+        tempo, not a practice tempo. The app manages
+        the gradual build-up automatically.
+      </p>
+      <p class="manual-prose">
+        Keep the gap between start and target BPM manageable.
+        A starting tempo of 30 BPM with a target of 100 BPM
+        creates a gap that the algorithm will bridge
+        gradually, but the intermediate steps may feel
+        disconnected from musical reality. A practical rule:
+        if the gap exceeds 40 BPM, consider setting an
+        intermediate target first — for example 60 BPM —
+        and raising it once that tempo is consolidated.
+        The app does not enforce this; it is a pedagogical
+        decision that remains with the user.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Use Analysis mode first
+      </h3>
+      <p class="manual-prose">
+        Before the first training session on a new
+        section, use the Analysis (🔍) mode to explore
+        the passage freely. This gives the student a
+        mental map before the counting begins. Analysis
+        remains available only during the Exploration
+        phase — once the section consolidates, switch
+        to the training counter exclusively.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Teach the hands-separate workflow explicitly
+      </h3>
+      <p class="manual-prose">
+        Students who are not guided on this point
+        will instinctively try to combine both hands
+        too early. Make the workflow explicit from the
+        first lesson: right hand and left hand are
+        registered as separate sections and trained
+        independently until both are stable. Only then
+        does the student switch to Analysis mode for
+        the combined version, and only when full
+        repetitions are reliably correct does a new
+        "both hands" section get created. This
+        structure prevents the common error of saving
+        sessions with zero correct repetitions, which
+        corrupts the scheduling data.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Explain the Memory Zones to students
+      </h3>
+      <p class="manual-prose">
+        Students who understand why the app schedules
+        repetitions the way it does are more likely
+        to trust the system and follow it consistently.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Respect the FrustrationGuard
+      </h3>
+      <p class="manual-prose">
+        When the guard triggers, do not override it.
+        Use the remaining lesson time for analysis or
+        work on a different piece. Return to the section
+        in the next lesson — or help the student choose
+        between two adjustments: <strong>lower the
+        tempo</strong>, or <strong>divide the passage
+        into smaller fragments</strong>. For complex
+        motor patterns, fragmentation is often the more
+        effective lever.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Check Statistics together
+      </h3>
+      <p class="manual-prose">
+        The Statistics page is a useful tool for
+        lesson conversations — success rate, entry
+        cost trends and stability distribution give
+        objective data to discuss progress.
+      </p>
+    </div>
+
+    <!-- Chapter 9 -->
+    <div class="manual-section" id="chapter-9">
+      <h2 class="manual-chapter-title">
+        <span class="manual-chapter-number">9</span>
+        Practice Tips
+      </h2>
+
+      <p class="manual-prose">
+        The following tips are grounded in motor learning
+        research and complement the algorithm. They are
+        practical suggestions, not requirements — the app
+        works without them. But applied consistently, they
+        can meaningfully improve the quality of each
+        session.
+      </p>
+
+      <h3 class="manual-section-heading">
+        Take a short rest between repetitions
+      </h3>
+      <p class="manual-prose">
+        Research suggests that brief pauses between
+        repetitions support motor memory consolidation.
+        A landmark study found that performance
+        improvements during motor skill learning develop
+        almost exclusively during short rest periods
+        between practice bouts — not during the practice
+        itself. During these pauses, the brain appears to
+        replay recently practised movement sequences,
+        a process linked to the strengthening of motor
+        memory traces (Bönstrup et al., 2019,
+        <em>Current Biology</em>).
+      </p>
+      <p class="manual-prose">
+        In practice: after completing a repetition,
+        pause briefly, release any physical tension,
+        and allow a few seconds of stillness before
+        attempting the next one. Resist the urge to
+        immediately analyse what went wrong — passive
+        rest appears more beneficial than active
+        cognitive processing during these
+        micro-intervals.
+      </p>
+      <div class="manual-tip">
+        💡 <strong>Note:</strong> The exact mechanism
+        behind these short-rest benefits remains an
+        active area of debate. Some recent studies
+        suggest that the performance gains observed
+        immediately after a rest period may reflect
+        motor pre-planning rather than true memory
+        consolidation, and may not persist in the
+        long term (Aarts et al., 2025,
+        <em>PNAS</em>).
+        The practical advice to pause between
+        repetitions remains sound regardless of the
+        mechanistic interpretation.
+      </div>
+
+      <h3 class="manual-section-heading">
+        Practice in the evening, sleep,
+        improve in the morning
+      </h3>
+      <p class="manual-prose">
+        Sleep is not merely rest — it is an active
+        consolidation process for motor memory traces.
+        Research using piano-type finger sequences has
+        shown that subcortical brain regions involved
+        in motor learning strengthen their mutual
+        connections during sleep, producing measurable
+        improvements in accuracy and timing the
+        following morning — without any additional
+        practice (Walker et al., 2002,
+        <em>Neuron</em>; Debas et al., 2014,
+        <em>NeuroImage</em>).
+      </p>
+      <p class="manual-prose">
+        Two practical consequences follow. First: a
+        section that still feels rough at the end of
+        a session may feel noticeably cleaner the next
+        morning — this is not coincidence but biology.
+        Second: practicing shortly before going to
+        sleep is particularly efficient, because
+        consolidation begins immediately during the
+        first sleep cycle.
+      </p>
+      <p class="manual-prose">
+        This is also why ModusPractica never
+        <em>schedules</em> a section twice on the same
+        calendar day. The algorithm treats one night of
+        sleep as the minimum unit of consolidation — a
+        design choice directly grounded in the research
+        above. You are always free to practice a section
+        a second time on the same day on your own
+        initiative. The additional session will be
+        recorded in your statistics, but the scheduling
+        algorithm will not be updated a second time: the
+        next practice date calculated after your first
+        session of the day remains unchanged.
+      </p>
+      <div class="manual-tip">
+        💡 A nap of 60–90 minutes produces a
+        comparable consolidation effect to a full
+        night of sleep for recently learned motor
+        material (Korman et al., 2007,
+        <em>Nature Neuroscience</em>). This duration
+        is sufficient to include the deeper sleep
+        stages needed for full motor consolidation.
+        Shorter naps improve alertness but may not
+        provide the complete consolidation benefit.
+        Results are less consistent than for
+        overnight sleep, but the evidence is
+        sufficient to recommend a nap after an
+        intensive practice session when a full
+        night of sleep is not yet available.
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<script src="js/fullscreen.js"></script>
+</body>
+</html>
