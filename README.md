@@ -5,7 +5,7 @@
 ModusPractica Pro is a free, browser-based practice planner for musicians. It uses spaced repetition (FSRS algorithm) and insights from cognitive and motor learning science to determine when and how often each section of your repertoire needs attention.
 
 🌐 **Live app:** [parturamusic.be/ModusPractica_Pro](https://parturamusic.be/ModusPractica_Pro/)  
-📋 **Version:** 1.1.9
+📋 **Version:** 1.2.0
 
 ---
 

@@ -22,12 +22,36 @@ import {
 } from './utils.js';
 
 const DB_NAME = 'ModusPracticaProDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const STORES = {
   PIECES: 'pieces',
   SECTIONS: 'sections',
   SESSIONS: 'sessions',
+  PIECE_AUDIO: 'pieceAudio',
 };
+
+const MAX_PIECE_AUDIO_BYTES = 50 * 1024 * 1024;
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result;
+      resolve(typeof result === 'string' ? result.split(',')[1] : '');
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+function base64ToBlob(base64, mimeType = 'audio/mpeg') {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new Blob([bytes], { type: mimeType });
+}
 
 function requestToPromise(request) {
   return new Promise((resolve, reject) => {
@@ -263,6 +287,9 @@ export const db = {
             autoIncrement: true,
           });
         }
+        if (!database.objectStoreNames.contains(STORES.PIECE_AUDIO)) {
+          database.createObjectStore(STORES.PIECE_AUDIO, { keyPath: 'pieceId' });
+        }
       };
 
       request.onsuccess = (event) => {
@@ -327,6 +354,7 @@ export const db = {
       title: pieceData.title || 'Untitled',
       composer: pieceData.composer || '',
       link: pieceData.link || '',
+      audioFileName: pieceData.audioFileName || '',
       notes: pieceData.notes || '',
       statsOnly: pieceData.statsOnly ?? false,
       archived: false,
@@ -378,12 +406,13 @@ export const db = {
 
     return new Promise((resolve, reject) => {
       const transaction = this._transaction(
-        [STORES.PIECES, STORES.SECTIONS, STORES.SESSIONS],
+        [STORES.PIECES, STORES.SECTIONS, STORES.SESSIONS, STORES.PIECE_AUDIO],
         'readwrite',
       );
       const piecesStore = transaction.objectStore(STORES.PIECES);
       const sectionsStore = transaction.objectStore(STORES.SECTIONS);
       const sessionsStore = transaction.objectStore(STORES.SESSIONS);
+      const audioStore = transaction.objectStore(STORES.PIECE_AUDIO);
 
       transaction.oncomplete = () => resolve();
       transaction.onerror = (event) => reject(event.target.error);
@@ -391,6 +420,7 @@ export const db = {
         reject(event.target.error || new Error('Transaction aborted'));
 
       piecesStore.delete(id);
+      audioStore.delete(id);
 
       for (const sectionId of sectionIds) {
         sectionsStore.delete(sectionId);
@@ -567,13 +597,70 @@ export const db = {
     );
   },
 
+  // ── PIECE AUDIO ─────────────────────────────────────────────────────────
+
+  async setPieceAudio(pieceId, file) {
+    if (!pieceId || !file) {
+      throw new Error('setPieceAudio requires pieceId and file');
+    }
+    if (file.size > MAX_PIECE_AUDIO_BYTES) {
+      throw new Error(
+        'MP3 file is too large (maximum ' +
+          Math.round(MAX_PIECE_AUDIO_BYTES / (1024 * 1024)) +
+          ' MB).',
+      );
+    }
+    const isMp3 =
+      file.type === 'audio/mpeg' ||
+      file.type === 'audio/mp3' ||
+      /\.mp3$/i.test(file.name || '');
+    if (!isMp3) {
+      throw new Error('Please choose an MP3 file.');
+    }
+
+    const record = {
+      pieceId,
+      fileName: file.name || 'audio.mp3',
+      mimeType: file.type || 'audio/mpeg',
+      blob: file,
+      updatedAt: new Date().toISOString(),
+    };
+    await this._put(STORES.PIECE_AUDIO, record);
+
+    const piece = await this.getPiece(pieceId);
+    if (piece) {
+      piece.audioFileName = record.fileName;
+      await this.updatePiece(piece);
+    }
+    return record.fileName;
+  },
+
+  async getPieceAudio(pieceId) {
+    return this._get(STORES.PIECE_AUDIO, pieceId);
+  },
+
+  async deletePieceAudio(pieceId) {
+    await this._delete(STORES.PIECE_AUDIO, pieceId);
+    const piece = await this.getPiece(pieceId);
+    if (piece) {
+      piece.audioFileName = '';
+      await this.updatePiece(piece);
+    }
+  },
+
+  async hasPieceAudio(pieceId) {
+    const record = await this.getPieceAudio(pieceId);
+    return !!(record && record.blob);
+  },
+
   // ── IMPORT / EXPORT ─────────────────────────────────────────────────────
 
   async exportAllData() {
-    const [pieces, sections, sessions] = await Promise.all([
+    const [pieces, sections, sessions, audioRecords] = await Promise.all([
       this.getAllPieces(),
       this._getAll(STORES.SECTIONS),
       this.getAllSessions(),
+      this._getAll(STORES.PIECE_AUDIO),
     ]);
 
     const pieceById = new Map(pieces.map((p) => [p.id, p]));
@@ -586,12 +673,24 @@ export const db = {
       };
     });
 
+    const pieceAudio = [];
+    for (const rec of audioRecords) {
+      if (!rec?.blob || !rec.pieceId) continue;
+      pieceAudio.push({
+        pieceId: rec.pieceId,
+        fileName: rec.fileName || 'audio.mp3',
+        mimeType: rec.mimeType || 'audio/mpeg',
+        dataBase64: await blobToBase64(rec.blob),
+      });
+    }
+
     const payload = {
-      version: 'pro-1.0',
+      version: 'pro-1.1',
       exportDate: new Date().toISOString(),
       sections: sectionsWithTitles,
       sessions,
       pieces,
+      pieceAudio,
     };
 
     return JSON.stringify(payload, null, 2);
@@ -618,6 +717,7 @@ export const db = {
         pieces: data.pieces || [],
         sections: data.sections || [],
         sessions: data.sessions || [],
+        pieceAudio: data.pieceAudio || [],
       };
     } else {
       throw new Error('Onbekend importformaat.');
@@ -632,12 +732,13 @@ export const db = {
     // sluit de transactie voortijdig.
     return new Promise((resolve, reject) => {
       const tx = this._transaction(
-        [STORES.PIECES, STORES.SECTIONS, STORES.SESSIONS],
+        [STORES.PIECES, STORES.SECTIONS, STORES.SESSIONS, STORES.PIECE_AUDIO],
         'readwrite',
       );
       const piecesStore = tx.objectStore(STORES.PIECES);
       const sectionsStore = tx.objectStore(STORES.SECTIONS);
       const sessionsStore = tx.objectStore(STORES.SESSIONS);
+      const audioStore = tx.objectStore(STORES.PIECE_AUDIO);
 
       tx.oncomplete = () => resolve();
       tx.onerror = (event) =>
@@ -649,6 +750,7 @@ export const db = {
         piecesStore.clear();
         sectionsStore.clear();
         sessionsStore.clear();
+        audioStore.clear();
 
         for (const piece of payload.pieces) {
           piecesStore.put(piece);
@@ -657,14 +759,21 @@ export const db = {
           sectionsStore.put(section);
         }
         for (const session of payload.sessions) {
-          // Sessions store heeft autoIncrement keyPath 'id'; verwijder een
-          // eventuele bestaande id zodat add() geen sleutelconflict geeft.
           const toInsert = { ...session };
           delete toInsert.id;
           sessionsStore.add(toInsert);
         }
+        for (const audio of payload.pieceAudio || []) {
+          if (!audio?.pieceId || !audio.dataBase64) continue;
+          audioStore.put({
+            pieceId: audio.pieceId,
+            fileName: audio.fileName || 'audio.mp3',
+            mimeType: audio.mimeType || 'audio/mpeg',
+            blob: base64ToBlob(audio.dataBase64, audio.mimeType || 'audio/mpeg'),
+            updatedAt: new Date().toISOString(),
+          });
+        }
       } catch (err) {
-        // Synchroon gegooide fout (bv. ongeldig record): expliciet aborten.
         try { tx.abort(); } catch (_) {}
         reject(err);
       }
@@ -712,6 +821,7 @@ export const db = {
       this._clearStore(STORES.PIECES),
       this._clearStore(STORES.SECTIONS),
       this._clearStore(STORES.SESSIONS),
+      this._clearStore(STORES.PIECE_AUDIO),
     ]);
   },
 };

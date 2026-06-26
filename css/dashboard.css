@@ -273,6 +273,59 @@
   border-color: rgba(30, 110, 181, 0.45);
 }
 
+.btn-piece-audio {
+  min-width: 32px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: var(--text-muted);
+}
+
+.btn-piece-audio.has-audio {
+  color: var(--accent);
+  border-color: rgba(30, 110, 181, 0.3);
+  background: var(--accent-light);
+}
+
+.btn-piece-audio.has-audio:hover {
+  color: var(--accent-hover);
+  border-color: rgba(30, 110, 181, 0.45);
+}
+
+.piece-audio-bar {
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.piece-audio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  min-width: 0;
+}
+
+.piece-audio-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+.piece-audio-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.piece-audio-player {
+  width: 100%;
+  height: 36px;
+}
+
 .piece-item.active .piece-item-title {
   color: var(--accent);
 }

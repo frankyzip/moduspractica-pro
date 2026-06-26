@@ -38,8 +38,32 @@ let dueSections = [];
 let selectedPieceId = null;
 let currentSort = 'due';
 let showArchived = false;
+let currentAudioObjectUrl = null;
+let pendingAudioPieceId = null;
 
 const LINK_ICON_SVG = `<svg class="link-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
+
+function revokeCurrentAudioUrl() {
+  if (currentAudioObjectUrl) {
+    URL.revokeObjectURL(currentAudioObjectUrl);
+    currentAudioObjectUrl = null;
+  }
+}
+
+function pieceHasAudio(piece) {
+  return !!(piece && piece.audioFileName);
+}
+
+function pieceAudioButtonHtml(piece) {
+  const hasAudio = pieceHasAudio(piece);
+  return `<button class="btn btn-secondary btn-sm btn-piece-audio${
+    hasAudio ? ' has-audio' : ''
+  }" id="btnPieceAudio" title="${
+    hasAudio ? 'Manage reference audio' : 'Add reference MP3'
+  }" aria-label="${
+    hasAudio ? 'Manage reference audio' : 'Add reference MP3'
+  }">🎧</button>`;
+}
 
 function pieceLinkButtonHtml(piece) {
   const hasLink = !!piece.link;
@@ -86,8 +110,8 @@ async function editPieceLink(pieceId) {
   if (!piece) return;
 
   const prompt = piece.link
-    ? 'Edit link (sheet music, video, etc.):\n\nLeave empty and save to remove the link.'
-    : 'Add a link (sheet music, video, etc.):';
+    ? 'Edit link (sheet music, YouTube, web page, etc.):\n\nLeave empty and save to remove the link.'
+    : 'Add a link (sheet music, YouTube, web page, etc.):';
 
   const url = await DialogService.input(
     prompt,
@@ -110,6 +134,95 @@ async function editPieceLink(pieceId) {
   await db.updatePiece(piece);
   log('DB', 'editPieceLink', { pieceId, hasLink: !!normalized });
   await loadData();
+}
+
+function openPieceAudioFilePicker(pieceId) {
+  pendingAudioPieceId = pieceId;
+  const input = document.getElementById('pieceAudioFileInput');
+  if (!input) return;
+  input.value = '';
+  input.click();
+}
+
+async function handlePieceAudioFileSelected(event) {
+  const file = event.target.files?.[0];
+  const pieceId = pendingAudioPieceId;
+  pendingAudioPieceId = null;
+  if (!file || !pieceId) return;
+
+  try {
+    await db.setPieceAudio(pieceId, file);
+    log('DB', 'setPieceAudio', { pieceId, fileName: file.name });
+    await loadData();
+    if (selectedPieceId === pieceId) {
+      renderPieceDetail(pieceId);
+    }
+    await DialogService.alert('Reference MP3 saved.', 'success');
+  } catch (err) {
+    await DialogService.alert(err.message || 'Could not save MP3.', 'warning');
+  }
+}
+
+async function removePieceAudio(pieceId) {
+  const piece = allPieces.find((p) => p.id === pieceId);
+  if (!piece || !pieceHasAudio(piece)) return;
+
+  const ok = await DialogService.confirm(
+    'Remove the reference MP3 for "' + piece.title + '"?',
+  );
+  if (!ok) return;
+
+  await db.deletePieceAudio(pieceId);
+  log('DB', 'deletePieceAudio', { pieceId });
+  revokeCurrentAudioUrl();
+  await loadData();
+  if (selectedPieceId === pieceId) {
+    renderPieceDetail(pieceId);
+  }
+}
+
+async function managePieceAudio(pieceId) {
+  const piece = allPieces.find((p) => p.id === pieceId);
+  if (!piece) return;
+
+  if (!pieceHasAudio(piece)) {
+    openPieceAudioFilePicker(pieceId);
+    return;
+  }
+
+  const action = await DialogService.menu('Reference audio for "' + piece.title + '"', [
+    { id: 'replace', label: 'Replace MP3' },
+    { id: 'remove', label: 'Remove MP3' },
+  ]);
+
+  if (action === 'replace') {
+    openPieceAudioFilePicker(pieceId);
+  } else if (action === 'remove') {
+    await removePieceAudio(pieceId);
+  }
+}
+
+async function appendPieceAudioPlayer(listEl, piece) {
+  if (!pieceHasAudio(piece)) return;
+
+  const audioRecord = await db.getPieceAudio(piece.id);
+  if (!audioRecord?.blob) return;
+
+  revokeCurrentAudioUrl();
+  currentAudioObjectUrl = URL.createObjectURL(audioRecord.blob);
+
+  const bar = document.createElement('div');
+  bar.className = 'piece-audio-bar';
+  bar.innerHTML = `
+    <div class="piece-audio-label">
+      <span class="piece-audio-icon" aria-hidden="true">🎧</span>
+      <span class="piece-audio-name" title="${escapeHtml(audioRecord.fileName || piece.audioFileName)}">
+        ${escapeHtml(audioRecord.fileName || piece.audioFileName)}
+      </span>
+    </div>
+    <audio class="piece-audio-player" controls preload="metadata"
+           src="${currentAudioObjectUrl}"></audio>`;
+  listEl.appendChild(bar);
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -599,6 +712,7 @@ function selectArchivedPiece(pieceId) {
       ← Today
     </button>
     ${pieceLinkButtonHtml(piece)}
+    ${pieceAudioButtonHtml(piece)}
     <button class="btn btn-success btn-sm" id="btnUnarchivePiece">
       ↩ Restore Piece
     </button>
@@ -615,6 +729,10 @@ function selectArchivedPiece(pieceId) {
     ?.addEventListener('click', () => editPieceLink(pieceId));
 
   document
+    .getElementById('btnPieceAudio')
+    ?.addEventListener('click', () => managePieceAudio(pieceId));
+
+  document
     .getElementById('btnUnarchivePiece')
     .addEventListener('click', () => unarchivePiece(pieceId));
   document
@@ -627,6 +745,8 @@ function selectArchivedPiece(pieceId) {
   const listEl = document.getElementById('sectionsList');
   listEl.innerHTML = '';
 
+  void appendPieceAudioPlayer(listEl, piece);
+
   const btnAddSection = document.getElementById('btnAddSection');
   if (btnAddSection) btnAddSection.style.display = 'none';
 
@@ -634,11 +754,13 @@ function selectArchivedPiece(pieceId) {
   if (headingEl) headingEl.textContent = 'Sections';
 
   if (pieceSections.length === 0) {
-    listEl.innerHTML = `
-      <div class="empty-state" style="padding:24px;">
-        <div class="empty-state-icon">📦</div>
-        <div class="empty-state-title">No sections</div>
-      </div>`;
+    const emptyEl = document.createElement('div');
+    emptyEl.className = 'empty-state';
+    emptyEl.style.padding = '24px';
+    emptyEl.innerHTML = `
+      <div class="empty-state-icon">📦</div>
+      <div class="empty-state-title">No sections</div>`;
+    listEl.appendChild(emptyEl);
     return;
   }
 
@@ -826,6 +948,7 @@ function sortPieces(pieces) {
 
 function backToPracticeToday() {
   selectedPieceId = null;
+  revokeCurrentAudioUrl();
 
   document.getElementById('mainPanelTitle').textContent = 'Practice Today';
   document.getElementById('mainPanelActions').innerHTML = '';
@@ -903,6 +1026,7 @@ function renderPieceDetail(pieceId) {
       ← Today
     </button>
     ${pieceLinkButtonHtml(piece)}
+    ${pieceAudioButtonHtml(piece)}
     <button class="btn btn-secondary btn-sm" id="btnEditPiece">✏️ Edit</button>
     <button class="btn btn-danger btn-sm" id="btnArchivePiece">Archive</button>
   `;
@@ -914,6 +1038,10 @@ function renderPieceDetail(pieceId) {
   document
     .getElementById('btnPieceLink')
     ?.addEventListener('click', () => editPieceLink(pieceId));
+
+  document
+    .getElementById('btnPieceAudio')
+    ?.addEventListener('click', () => managePieceAudio(pieceId));
 
   document
     .getElementById('btnEditPiece')
@@ -963,6 +1091,8 @@ function renderPieceDetail(pieceId) {
   document.getElementById('chkStatsOnly')?.addEventListener('change', (e) => {
     togglePieceStatsOnly(pieceId, e.target.checked);
   });
+
+  void appendPieceAudioPlayer(listEl, piece);
 
   if (pieceSections.length === 0 && archivedPieceSections.length === 0) {
     const emptyEl = document.createElement('div');
@@ -1377,6 +1507,11 @@ async function updateStreakStats() {
 
 function bindEvents() {
   document.getElementById('btnAddPiece').addEventListener('click', addPiece);
+
+  document.getElementById('pieceAudioFileInput')?.addEventListener(
+    'change',
+    handlePieceAudioFileSelected,
+  );
 
   document.getElementById('btnAddSection').addEventListener('click', () => {
     if (selectedPieceId) addSection(selectedPieceId);

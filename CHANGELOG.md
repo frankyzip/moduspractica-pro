@@ -5,6 +5,27 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.2.0] — 2026-06-26
+
+### Added
+- `js/db.js`: IndexedDB store `pieceAudio` (database version 2) to save a
+  local reference MP3 per piece; `setPieceAudio()`, `getPieceAudio()`,
+  `deletePieceAudio()`, and `hasPieceAudio()`; 50 MB size limit per file.
+- `js/dashboard.js`, `css/dashboard.css`: **🎧** button in piece detail to
+  choose, replace, or remove a reference MP3 from the hard drive; built-in
+  audio player in the piece detail view; button turns blue when audio is
+  attached.
+- `js/dialog.js`: `DialogService.menu()` for replace/remove audio choices.
+- `dashboard.html`: hidden file input for MP3 selection (`accept` MP3 only).
+- Backup/export format `pro-1.1` includes `pieceAudio` (base64-encoded MP3s).
+
+### Changed
+- `js/dashboard.js`: link dialog copy now explicitly mentions YouTube and web
+  pages; external links remain separate from reference audio.
+- `manual.html`, `releases.html`: documented reference MP3 audio and clarified
+  link vs audio usage.
+- `about.html`, `settings.html`: version 1.2.0 · build 20260626.
+
 ## [1.1.9] — 2026-06-25
 
 ### Added

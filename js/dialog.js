@@ -364,4 +364,130 @@ export const DialogService = {
       document.addEventListener("keydown", onKey);
     });
   },
+
+  /**
+   * Shows a choice menu. Returns the selected option id, or null on cancel.
+   * @param {string} message
+   * @param {Array<{id: string, label: string}>} choices
+   * @returns {Promise<string|null>}
+   */
+  async menu(message, choices = []) {
+    return new Promise((resolve) => {
+      const existing = document.getElementById("dialog-service-overlay");
+      if (existing) existing.remove();
+
+      const accentColor = "var(--accent, #00a8e8)";
+      const safeMessage = String(message)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\n/g, "<br>");
+
+      const overlay = document.createElement("div");
+      overlay.id = "dialog-service-overlay";
+      overlay.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        animation: dialogFadeIn 0.15s ease;
+      `;
+
+      const buttonsHtml = choices
+        .map(
+          (choice) => `
+            <button class="dialog-btn dialog-btn-primary dialog-menu-btn"
+                    data-choice-id="${String(choice.id).replace(/"/g, "&quot;")}">
+              ${String(choice.label)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")}
+            </button>`,
+        )
+        .join("");
+
+      overlay.innerHTML = `
+        <style>
+          @keyframes dialogFadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to   { opacity: 1; transform: scale(1); }
+          }
+          #dialog-service-box {
+            background: var(--surface, #1e1e2e);
+            border: 1px solid ${accentColor};
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            font-family: inherit;
+            color: var(--text-primary, #e0e0e0);
+          }
+          #dialog-service-message {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            text-align: center;
+            color: var(--text-primary, #e0e0e0);
+          }
+          #dialog-service-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+          }
+          .dialog-btn {
+            padding: 0.55rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: opacity 0.15s;
+            width: 100%;
+          }
+          .dialog-btn:hover { opacity: 0.85; }
+          .dialog-btn-primary {
+            background: ${accentColor};
+            color: #fff;
+          }
+          .dialog-btn-secondary {
+            background: var(--surface-2, #2a2a3e);
+            color: var(--text-secondary, #aaa);
+            border: 1px solid var(--border, #444);
+          }
+        </style>
+        <div id="dialog-service-box">
+          <div id="dialog-service-message">${safeMessage}</div>
+          <div id="dialog-service-buttons">
+            ${buttonsHtml}
+            <button class="dialog-btn dialog-btn-secondary" id="dialog-btn-cancel">Cancel</button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(overlay);
+
+      const cleanup = (result) => {
+        overlay.remove();
+        document.removeEventListener("keydown", onKey);
+        resolve(result);
+      };
+
+      overlay.querySelectorAll("[data-choice-id]").forEach((btn) => {
+        btn.addEventListener("click", () => cleanup(btn.dataset.choiceId));
+      });
+
+      document
+        .getElementById("dialog-btn-cancel")
+        .addEventListener("click", () => cleanup(null));
+
+      const onKey = (e) => {
+        if (e.key === "Escape") cleanup(null);
+      };
+      document.addEventListener("keydown", onKey);
+    });
+  },
 };
