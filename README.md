@@ -53,24 +53,23 @@ See [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
-## License
+## Licensing
 
 Copyright © 2026 Frank De Baere. All rights reserved.
 
-ModusPractica Pro is **free to use for personal, non-commercial practice purposes**. The source code is publicly available for study and transparency.
+This project is **dual-licensed**. It is available under the **GNU GPLv3** for non-commercial and open-source use. For commercial use, integration into proprietary software, or commercial exploitation, a separate commercial license must be obtained from the copyright holder.
 
-**Without prior written permission from the author, you are not permitted to:**
+### Open Source (GNU GPLv3)
 
-- modify, adapt, or create derivative works
-- redistribute or republish the source code or any part thereof
-- use the software for commercial purposes
-- deploy a modified or unmodified version under a different name or domain
+You may use, modify, and redistribute this software under the terms of the [GNU General Public License v3.0](LICENSE) (or, at your option, any later version published by the Free Software Foundation).
 
-Any use beyond the above requires explicit written authorisation.
+### Commercial use
 
-📧 Contact: [info@parturamusic.be](mailto:info@parturamusic.be)
+Use, modification, or distribution of this software for **commercial purposes**, or integration into **proprietary (closed-source) products**, is **not permitted** under the GPLv3 alone. A prior **written commercial license agreement** is required.
 
-The full license text is in [LICENSE.md](LICENSE.md). This software is provided “as is”, without warranty of any kind.
+**Commercial licensing inquiries:** [info@parturamusic.be](mailto:info@parturamusic.be)
+
+The full GPLv3 license text is in [LICENSE](LICENSE).
 
 ---
 
