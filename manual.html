@@ -446,6 +446,41 @@
         libraries may make backups slower; keep reference
         files reasonably sized when possible.
       </p>
+      <p class="manual-prose">
+        <strong>One MP3 per piece.</strong> You can attach
+        reference audio to as many different pieces as you
+        like — each piece stores its own file separately.
+        They do not overwrite one another.
+      </p>
+      <p class="manual-prose">
+        <strong>A copy in your browser, not a file path.</strong>
+        When you choose an MP3, ModusPractica Pro saves a
+        copy in IndexedDB (browser storage). It does
+        <em>not</em> remember the folder on your hard drive.
+        If you move or delete the original file on your
+        computer, the copy in the app keeps working. To
+        switch to a different recording, use
+        <strong>Replace MP3</strong> via the 🎧 button.
+      </p>
+      <p class="manual-prose">
+        <strong>Archive vs delete.</strong> Archiving a piece
+        hides it from Due Today but keeps the piece — and its
+        MP3 — in storage. <strong>Delete Permanently</strong>
+        removes the piece, its sections, and its reference
+        MP3 from browser storage. Practice history in
+        Statistics is preserved, as with other deletions.
+        To remove only the audio and keep the piece, use
+        <strong>Remove MP3</strong> from the 🎧 menu.
+      </p>
+      <p class="manual-prose">
+        <strong>Backups and browser data.</strong> Reference
+        MP3s are included when you export a backup in
+        Settings (see
+        <a href="#chapter-7">Backup &amp; Restore</a>).
+        If you clear this site's data in your browser, or
+        use Reset App, all stored MP3s are lost unless you
+        have an export file to restore from.
+      </p>
 
       <h3 class="manual-section-heading">
         Adding a section
@@ -1000,7 +1035,13 @@
         longer actively studied. Archived items are
         hidden from Due Today but their full practice
         history is preserved and remains visible in
-        Statistics. Sections can also be permanently
+        Statistics. <strong>Reference MP3s stay attached
+        to archived pieces</strong> — archive does not
+        delete audio. Use <strong>Delete Permanently</strong>
+        on an archived piece to remove the piece and its
+        MP3 from storage; see
+        <a href="#sec-piece-audio">Reference MP3 audio</a>
+        for details. Sections can also be permanently
         deleted directly from the piece detail view —
         both active and archived sections have a delete
         button right where you see them, so you never
@@ -1224,6 +1265,10 @@
         Export all your data as a JSON file at any
         time. This file can be reimported to restore
         your data or transfer it to another device.
+        <strong>Reference MP3s are included</strong> in
+        the export, so your backup can be large if many
+        pieces have audio attached. Export regularly if
+        you rely on reference tracks.
       </p>
 
       <div class="manual-warning">
@@ -1276,10 +1321,13 @@
         ModusPractica Pro stores all data locally
         in your browser using IndexedDB. There is
         no cloud server, no account, and no
-        synchronisation. This is a deliberate
-        choice that keeps your data private and
-        under your full control — but it comes
-        with one important consequence:
+        synchronisation. This includes your repertoire,
+        practice history, and any <strong>reference MP3
+        files</strong> you attach to pieces — they live
+        in the same local database, not on a remote
+        server. This is a deliberate choice that keeps
+        your data private and under your full control —
+        but it comes with one important consequence:
         <strong>your data lives in the browser
         you use.</strong>
       </p>
